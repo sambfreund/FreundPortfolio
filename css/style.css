@@ -27,12 +27,13 @@ body {
 
 .slides-navigation a.back { 
 	left: 25px;
-	background-image: url(../images/back.png)
+	background-image: url(../images/icons/back.png)
 }
 
 .slides-navigation a.next { 
 	right: 25px;
-	background-image: url(../images/next.png)
+	background-image: url(../images/icons/next.png)
+}
 }
 
 .titleMessage {
