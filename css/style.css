@@ -240,10 +240,16 @@ body {
 	z-index: 3;
 }
 
+.items .icons i {
+	color: #E3E4DB;
+	font-size: 20px;
+	margin-top: 9px;
+}
+
 .items a {
 	width: 40px;
 	height: 40px;
-	background-color: #E3E4DB;
+	background-color: #8B2635;
 	position: relative;
 	display: inline-block;
 
