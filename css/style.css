@@ -34,7 +34,6 @@ body {
 	right: 25px;
 	background-image: url(../images/icons/next.png)
 }
-}
 
 .titleMessage {
 	position: absolute;
@@ -377,39 +376,22 @@ body {
   background: #f1f1f1;
 }
 
-/* Header/Blog Title */
-
-/* Create two unequal columns that floats next to each other */
-/* Left column */
-.blogleftcolumn { 
-  float: left;
-  width: 75%;
+.sideinfo { 
+  background-color: #8b2635;
+  text-align: center;
 }
 
-/* Right column */
-.blogrightcolumn {
-  float: left;
-  width: 25%;
-  padding-left: 20px;
-}
-
-/* Fake image */
-.blogfakeimg {
-  background-color: #aaa;
-  width: 100%;
-  padding: 20px;
-}
-
-/* Add a card effect for articles */
 .blogcard {
   background-color: white;
-  padding: 20px;
-  margin-top: 20px;
+  padding: 25px 30px;
 }
 
-/* Clear floats after the columns */
-.blogrow:after {
-  content: "";
-  display: table;
-  clear: both;
+.socials {
+	background-color: #E3E4DB;
+	padding: 10px 10px;
+}
+
+.socialsinner {
+	background-color: #E3E4DB;
+	padding: 5px 5px;
 }

@@ -20,7 +20,7 @@ $(document).ready(function() {
  	play: 5000
  });
 
- var typer = new Typed(".typed", {
+	var typed = new Typed(".typed", {
  		strings: ["Designer.", "Developer.", "Streamer.", "Husband.", "Life Long Learner."],
  		typeSpeed: 80,
  		loop: true,
