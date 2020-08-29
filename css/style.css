@@ -369,7 +369,12 @@ body {
  	background: url(../images/loader.gif) center center no-repeat;
  }
 
-/*blog*/
+/* -------------------blog------------------- */
+
+.blog-title {
+	margin-top: 18px;
+}
+
 .blogbody {
   font-family: Arial;
   padding: 20px;
