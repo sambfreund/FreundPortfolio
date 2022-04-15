@@ -21,7 +21,7 @@ $(document).ready(function() {
  });
 
 	var typed = new Typed(".typed", {
- 		strings: ["Designer.", "Developer.", "Streamer.", "Husband.", "Life Long Learner."],
+ 		strings: ["Father.", "Developer.", "Designer.", "Husband.", "Quality Assurance Professional", "Life Long Learner."],
  		typeSpeed: 80,
  		loop: true,
  		startDelay: 1000,
@@ -79,7 +79,7 @@ $(document).ready(function() {
 					element.countup(endVal);
 				})
 
-					countUpFinished = true; 
+					countUpFinished = true;
 			}
 
 		});
