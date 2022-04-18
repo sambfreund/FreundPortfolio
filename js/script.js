@@ -21,7 +21,7 @@ $(document).ready(function() {
  });
 
 	var typed = new Typed(".typed", {
- 		strings: ["Father.", "Developer.", "Designer.", "Husband.", "Quality Assurance Professional", "Life Long Learner."],
+ 		strings: ["Father.", "Quality Assurance Professional.", "Designer.", "Husband.", "Developer.", "Life Long Learner."],
  		typeSpeed: 80,
  		loop: true,
  		startDelay: 1000,
