@@ -39,6 +39,7 @@
 
 	<!-- Style CSS -->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="stylesheet" type="text/css" href="css/recs.css">
 
 </head>
 
@@ -71,16 +72,19 @@
 					<button class="btn" onclick="filterSelection('books')"> Books</button>
 					<button class="btn" onclick="filterSelection('movies')"> Movies</button>
 					<button class="btn" onclick="filterSelection('games')"> Games</button>
+					<button class="btn" onclick="filterSelection('recipes')">Recipes</button>
+					<button class="btn" onclick="filterSelection('sports')"> Sports</button>
 				</div>
 			</div>
+			<span></span>
 			<div class="row">
 			<!-- Elements -->
 			<div class="stuffcontainer">
 				<div class="filterDiv books">The Alchemist</div>
-				<div class="filterDiv colors games">Orange</div>
-				<div class="filterDiv books">Volvo</div>
-				<div class="filterDiv colors">Red</div>
-				<div class="filterDiv books movies">Mustang</div>
+				<div class="filterDiv movies">Orange</div>
+				<div class="filterDiv games">Volvo</div>
+				<div class="filterDiv recipes">Red</div>
+				<div class="filterDiv sports movies">Mustang</div>
 				<div class="filterDiv colors">Blue</div>
 				<div class="filterDiv movies">Cat</div>
 				<div class="filterDiv movies">Dog</div>
@@ -139,6 +143,7 @@
 					this.className += " active";
 				});
 				}
+				
 			</script>
 			</div>
 		</div>
