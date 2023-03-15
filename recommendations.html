@@ -64,7 +64,7 @@
 	<div id="stats" class="statsSection">
 		<div class="container">
 			<div class="row">
-				<H2 class="recsHeader">Select what you like!</H2>
+				<H2 class="recsHeader">Here are a few of my favorite things!</H2>
 
 				<!-- Filters -->
 				<div id="myBtnContainer">
@@ -73,78 +73,89 @@
 					<button class="btn" onclick="filterSelection('movies')"> Movies</button>
 					<button class="btn" onclick="filterSelection('games')"> Games</button>
 					<button class="btn" onclick="filterSelection('recipes')">Recipes</button>
-					<button class="btn" onclick="filterSelection('sports')"> Sports</button>
+					<button class="btn" onclick="filterSelection('songs')">Songs</button>
 				</div>
 			</div>
+
 			<span></span>
+
 			<div class="row">
-			<!-- Elements -->
-			<div class="stuffcontainer">
-				<div class="filterDiv books">The Alchemist</div>
-				<div class="filterDiv movies">Orange</div>
-				<div class="filterDiv games">Volvo</div>
-				<div class="filterDiv recipes">Red</div>
-				<div class="filterDiv sports movies">Mustang</div>
-				<div class="filterDiv colors">Blue</div>
-				<div class="filterDiv movies">Cat</div>
-				<div class="filterDiv movies">Dog</div>
-				<div class="filterDiv games">Melon</div>
-				<div class="filterDiv games movies">Kiwi</div>
-				<div class="filterDiv games">Banana</div>
-				<div class="filterDiv games">Lemon</div>
-				<div class="filterDiv movies">Cow</div>
-			</div>
+				<div class="stuffcontainer">
+					<div class="filterDiv books"><a href="https://www.goodreads.com/book/show/18144590-the-alchemist" target="_blank">The Alchemist</a></div>
+					<div class="filterDiv movies">Inception</div>
+					<div class="filterDiv games">The Legend of Zelda: Ocarina of Time</div>
+					<div class="filterDiv recipes">Banana Pancakes</div>
+					<div class="filterDiv recipes">Ebelskiver</div>
+					<div class="filterDiv recipes">Two Ingredient Bread</div>
+					<div class="filterDiv movies">Rocky</div>
+					<div class="filterDiv movies">The Dark Knight</div>
+					<div class="filterDiv movies">Billy Madison</div>
+					<div class="filterDiv games">Monster Train</div>
+					<div class="filterDiv movies">Forrest Gump</div>
+					<div class="filterDiv games">Subnautica</div>
+					<div class="filterDiv games">Half-Life Alyx</div>
+					<div class="filterDiv movies">Gladiator</div>
+					<div class="filterDiv books">Harry Potter and the Sorcerer's Stone</div>
+					<div class="filterDiv books">Saga, Book One</div>
+					<div class="filterDiv books">The Bassoon King</div>
+					<div class="filterDiv books">Beneath a Scarlet Sky</div>
+					<div class="filterDiv books">Why Fish Don't Exist</div>
+					<div class="filterDiv books">Tribe</div>
+					<div class="filterDiv books">The Midnight Library</div>
+					<div class="filterDiv books">Project Hail Mary</div>
+					<div class="filterDiv books">A New Reality</div>
+				</div>
 
-			<script>
-				filterSelection("all")
-				function filterSelection(c) {
-				var x, i;
-				x = document.getElementsByClassName("filterDiv");
-				if (c == "all") c = "";
-				// Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
-				for (i = 0; i < x.length; i++) {
-					removeRecommendation(x[i], "show");
-					if (x[i].className.indexOf(c) > -1) myRecommendations(x[i], "show");
-				}
-				}
-
-				// Show filtered elements
-				function myRecommendations(element, name) {
-				var i, arr1, arr2;
-				arr1 = element.className.split(" ");
-				arr2 = name.split(" ");
-				for (i = 0; i < arr2.length; i++) {
-					if (arr1.indexOf(arr2[i]) == -1) {
-					element.className += " " + arr2[i];
+				<script>
+					filterSelection("all")
+					function filterSelection(c) {
+					var x, i;
+					x = document.getElementsByClassName("filterDiv");
+					if (c == "all") c = "";
+					// Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
+					for (i = 0; i < x.length; i++) {
+						removeRecommendation(x[i], "show");
+						if (x[i].className.indexOf(c) > -1) myRecommendations(x[i], "show");
 					}
-				}
-				}
-
-				// Hide elements that are not selected
-				function removeRecommendation(element, name) {
-				var i, arr1, arr2;
-				arr1 = element.className.split(" ");
-				arr2 = name.split(" ");
-				for (i = 0; i < arr2.length; i++) {
-					while (arr1.indexOf(arr2[i]) > -1) {
-					arr1.splice(arr1.indexOf(arr2[i]), 1);
 					}
-				}
-				element.className = arr1.join(" ");
-				}
 
-				// Add active class to the current control button (highlight it)
-				var btnContainer = document.getElementById("myBtnContainer");
-				var btns = btnContainer.getElementsByClassName("btn");
-				for (var i = 0; i < btns.length; i++) {
-				btns[i].addEventListener("click", function() {
-					var current = document.getElementsByClassName("active");
-					current[0].className = current[0].className.replace(" active", "");
-					this.className += " active";
-				});
-				}
-				
-			</script>
+					// Show filtered elements
+					function myRecommendations(element, name) {
+					var i, arr1, arr2;
+					arr1 = element.className.split(" ");
+					arr2 = name.split(" ");
+					for (i = 0; i < arr2.length; i++) {
+						if (arr1.indexOf(arr2[i]) == -1) {
+						element.className += " " + arr2[i];
+						}
+					}
+					}
+
+					// Hide elements that are not selected
+					function removeRecommendation(element, name) {
+					var i, arr1, arr2;
+					arr1 = element.className.split(" ");
+					arr2 = name.split(" ");
+					for (i = 0; i < arr2.length; i++) {
+						while (arr1.indexOf(arr2[i]) > -1) {
+						arr1.splice(arr1.indexOf(arr2[i]), 1);
+						}
+					}
+					element.className = arr1.join(" ");
+					}
+
+					// Add active class to the current control button (highlight it)
+					var btnContainer = document.getElementById("myBtnContainer");
+					var btns = btnContainer.getElementsByClassName("btn");
+					for (var i = 0; i < btns.length; i++) {
+					btns[i].addEventListener("click", function() {
+						var current = document.getElementsByClassName("active");
+						current[0].className = current[0].className.replace(" active", "");
+						this.className += " active";
+					});
+					}
+
+				</script>
 			</div>
 		</div>
 	</div>
