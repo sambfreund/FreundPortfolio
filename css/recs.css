@@ -41,10 +41,10 @@
 
 /* Add a dark background to the active button */
 .btn.active {
-	background-color: #9200009c;
+	background-color: #920000;
 	color: white;
 }
-a {
+.filterDiv a {
   color: white;
 }
 
@@ -53,16 +53,16 @@ a {
 }
 
 .movies {
-  background-color: #bfc0fc;
+  background-color: #3d3ea0;
 }
 .books {
-  background-color: #039aff;
+  background-color: #0056b3;
 }
 .games {
-  background-color: #6263a5;
+  background-color: #4e4f8a;
 }
 .recipes {
-  background-color: #b213fc;
+  background-color: #7a0da6;
 }
 .songs {
   background-color: #5c2b24;

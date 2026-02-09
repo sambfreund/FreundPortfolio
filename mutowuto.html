@@ -1,0 +1,683 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8" />
+	<title>Muto & Wuto — Sam Freund</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+
+	<!-- Bootstrap CDN -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
+
+	<!-- Font Awesome -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+	<!-- Style CSS -->
+	<link rel="stylesheet" type="text/css" href="css/style.css">
+	<link rel="icon" type="image/x-icon" href="/images/icons/smalllogo.ico">
+
+	<style>
+		.game-section {
+			padding: 60px 0 80px;
+			min-height: calc(100vh - 200px);
+			text-align: center;
+		}
+		.game-header {
+			margin-bottom: 24px;
+		}
+		.game-header h1 {
+			font-size: 2rem;
+			font-weight: 600;
+			letter-spacing: 3px;
+			color: var(--color-text);
+			margin: 0 0 8px 0;
+		}
+		.game-header p {
+			color: var(--color-text-muted);
+			font-size: 1rem;
+		}
+		.game-controls {
+			display: flex;
+			justify-content: center;
+			gap: 40px;
+			margin-bottom: 16px;
+			font-size: 0.85rem;
+			color: var(--color-text-muted);
+		}
+		.game-controls kbd {
+			display: inline-block;
+			padding: 2px 6px;
+			background: var(--color-bg-alt);
+			border: 1px solid var(--color-border);
+			border-radius: 4px;
+			font-family: var(--font-mono);
+			font-size: 0.8rem;
+		}
+		.game-hud {
+			display: flex;
+			justify-content: space-between;
+			align-items: center;
+			max-width: 600px;
+			margin: 0 auto 8px;
+			padding: 8px 16px;
+			background: #2c2c2c;
+			border-radius: var(--radius) var(--radius) 0 0;
+			color: #fff;
+			font-family: var(--font-mono);
+			font-size: 0.9rem;
+		}
+		.game-hud-timer {
+			font-weight: 700;
+			font-size: 1.1rem;
+		}
+		.game-hud-timer.urgent {
+			color: #ff4444;
+		}
+		.game-canvas-area {
+			display: inline-block;
+			max-width: 100%;
+			position: relative;
+		}
+		.game-canvas-wrapper {
+			border: 1px solid var(--color-border);
+			border-top: none;
+			border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+			overflow: hidden;
+			box-shadow: var(--shadow-md);
+		}
+		.game-canvas-wrapper canvas {
+			display: block;
+			max-width: 100%;
+			height: auto;
+		}
+		.game-overlay {
+			position: absolute;
+			top: 0;
+			left: 0;
+			right: 0;
+			bottom: 0;
+			display: flex;
+			flex-direction: column;
+			align-items: center;
+			justify-content: center;
+			background: rgba(0, 0, 0, 0.75);
+			border-radius: 0 0 var(--radius-lg) var(--radius-lg);
+			color: #fff;
+			z-index: 10;
+		}
+		.game-overlay.hidden {
+			display: none;
+		}
+		.game-overlay h2 {
+			font-size: 1.8rem;
+			font-weight: 700;
+			letter-spacing: 2px;
+			margin: 0 0 8px 0;
+		}
+		.game-overlay p {
+			font-size: 1rem;
+			opacity: 0.8;
+			margin: 0 0 4px 0;
+		}
+		.game-overlay .gold {
+			color: #c9a227;
+		}
+		.game-overlay .subtext {
+			font-size: 0.85rem;
+			opacity: 0.5;
+			margin-top: 16px;
+		}
+	</style>
+</head>
+<body>
+	<nav id="navigation" class="navbar navbar-expand-lg">
+		<a class="navbar-brand" href="index.html">Sam Freund</a>
+		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+			<span class="navbar-toggler-icon"></span>
+		</button>
+		<div class="collapse navbar-collapse" id="navbarNav">
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" href="https://sambfreund.com">Portfolio</a></li>
+			</ul>
+		</div>
+	</nav>
+
+	<main class="game-section">
+		<div class="container">
+			<div class="game-header">
+				<h1>MUTO & WUTO</h1>
+				<p>A dual-movement maze game — guide both players to their goals before time runs out</p>
+			</div>
+			<div class="game-controls">
+				<div><strong style="color: #4a7aff;">Wuto (Blue):</strong> <kbd>&larr;</kbd> <kbd>&uarr;</kbd> <kbd>&darr;</kbd> <kbd>&rarr;</kbd></div>
+				<div><strong style="color: #ccc;">Muto (White):</strong> <kbd>W</kbd> <kbd>A</kbd> <kbd>S</kbd> <kbd>D</kbd></div>
+			</div>
+
+			<div class="game-hud">
+				<span id="hudLevel">Level 1 / 5</span>
+				<span id="hudTimer" class="game-hud-timer">0:30</span>
+			</div>
+
+			<div class="game-canvas-area">
+				<div class="game-canvas-wrapper">
+					<canvas id="canvas" width="600" height="600"></canvas>
+				</div>
+				<div class="game-overlay" id="overlay">
+					<h2 id="overlayTitle">MUTO & WUTO</h2>
+					<p id="overlayMsg">Guide both players to their matching goals</p>
+					<p class="subtext" id="overlayHint">Press any key to start</p>
+				</div>
+			</div>
+		</div>
+	</main>
+
+	<div class="contactSection section">
+		<div class="container">
+			<div class="row">
+				<div class="col-12 text-center">
+					<h2>Let's chat!</h2>
+					<p class="subHeading">If you'd like to get in contact feel free to drop me an e-mail here.</p>
+					<a href="mailTo:sambfreund@gmail.com" class="contactButton">sambfreund@gmail.com</a>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<footer class="copyrightSection">
+		<p>&copy; Sam Freund 2025</p>
+	</footer>
+
+	<!-- Bootstrap CDN -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+
+	<script>
+	(function() {
+		var GRID = 20;
+		var COLS = 30;
+		var ROWS = 30;
+		var WIDTH = 600;
+		var HEIGHT = 600;
+
+		// Build wall set helper
+		function buildWallSet(wallArray) {
+			var s = {};
+			for (var i = 0; i < wallArray.length; i++) {
+				s[wallArray[i][0] + ',' + wallArray[i][1]] = true;
+			}
+			return s;
+		}
+
+		// Generate border walls
+		function borders() {
+			var b = [];
+			for (var i = 0; i < COLS; i++) {
+				b.push([0, i], [ROWS - 1, i]);
+			}
+			for (var i = 1; i < ROWS - 1; i++) {
+				b.push([i, 0], [i, COLS - 1]);
+			}
+			return b;
+		}
+
+		// Helper: horizontal wall line
+		function hWall(row, c1, c2) {
+			var w = [];
+			for (var c = c1; c <= c2; c++) w.push([row, c]);
+			return w;
+		}
+
+		// Helper: vertical wall line
+		function vWall(col, r1, r2) {
+			var w = [];
+			for (var r = r1; r <= r2; r++) w.push([r, col]);
+			return w;
+		}
+
+		var levels = [
+			// LEVEL 1 — Simple corridors, tutorial
+			{
+				time: 30,
+				blueStart: [3, 3],
+				whiteStart: [3, 26],
+				blueGoal: [26, 26],
+				whiteGoal: [26, 3],
+				walls: borders().concat(
+					hWall(8, 1, 12),
+					hWall(8, 17, 28),
+					hWall(15, 5, 14),
+					hWall(15, 18, 25),
+					hWall(22, 1, 10),
+					hWall(22, 15, 28)
+				)
+			},
+			// LEVEL 2 — More walls, longer paths
+			{
+				time: 35,
+				blueStart: [1, 1],
+				whiteStart: [28, 28],
+				blueGoal: [28, 14],
+				whiteGoal: [1, 14],
+				walls: borders().concat(
+					vWall(7, 1, 12),
+					vWall(7, 17, 28),
+					vWall(14, 4, 11),
+					vWall(14, 18, 25),
+					vWall(22, 1, 13),
+					vWall(22, 16, 28),
+					hWall(14, 1, 6),
+					hWall(14, 23, 28),
+					hWall(7, 10, 19),
+					hWall(22, 9, 20)
+				)
+			},
+			// LEVEL 3 — Branching paths, players start far apart
+			{
+				time: 30,
+				blueStart: [1, 1],
+				whiteStart: [28, 1],
+				blueGoal: [28, 28],
+				whiteGoal: [1, 28],
+				walls: borders().concat(
+					// Horizontal barriers
+					hWall(5, 1, 8),
+					hWall(5, 12, 18),
+					hWall(5, 22, 28),
+					hWall(10, 4, 10),
+					hWall(10, 14, 25),
+					hWall(15, 1, 7),
+					hWall(15, 11, 16),
+					hWall(15, 20, 28),
+					hWall(20, 3, 12),
+					hWall(20, 16, 22),
+					hWall(25, 1, 6),
+					hWall(25, 10, 19),
+					hWall(25, 23, 28),
+					// Some vertical connectors
+					vWall(8, 5, 9),
+					vWall(18, 5, 9),
+					vWall(12, 15, 19),
+					vWall(22, 20, 24)
+				)
+			},
+			// LEVEL 4 — Tighter corridors, more dead ends
+			{
+				time: 25,
+				blueStart: [1, 14],
+				whiteStart: [28, 14],
+				blueGoal: [14, 28],
+				whiteGoal: [14, 1],
+				walls: borders().concat(
+					// Dense grid of walls
+					vWall(4, 1, 6),
+					vWall(4, 10, 20),
+					vWall(4, 24, 28),
+					vWall(8, 3, 8),
+					vWall(8, 12, 17),
+					vWall(8, 21, 28),
+					vWall(12, 1, 5),
+					vWall(12, 9, 12),
+					vWall(12, 16, 22),
+					vWall(12, 26, 28),
+					vWall(17, 1, 4),
+					vWall(17, 8, 13),
+					vWall(17, 17, 21),
+					vWall(17, 25, 28),
+					vWall(21, 2, 7),
+					vWall(21, 11, 18),
+					vWall(21, 22, 27),
+					vWall(25, 1, 5),
+					vWall(25, 9, 14),
+					vWall(25, 18, 23),
+					vWall(25, 27, 28),
+					hWall(7, 1, 3),
+					hWall(7, 9, 11),
+					hWall(7, 18, 20),
+					hWall(7, 25, 28),
+					hWall(14, 5, 7),
+					hWall(14, 13, 16),
+					hWall(14, 22, 24),
+					hWall(22, 1, 3),
+					hWall(22, 8, 10),
+					hWall(22, 19, 21),
+					hWall(22, 26, 28)
+				)
+			},
+			// LEVEL 5 — Complex maze, tight time
+			{
+				time: 20,
+				blueStart: [1, 1],
+				whiteStart: [28, 28],
+				blueGoal: [28, 28],
+				whiteGoal: [1, 1],
+				walls: borders().concat(
+					// Dense maze
+					hWall(3, 1, 5),
+					hWall(3, 8, 14),
+					hWall(3, 18, 22),
+					hWall(3, 25, 28),
+					vWall(6, 1, 3),
+					vWall(6, 6, 9),
+					vWall(15, 1, 3),
+					vWall(15, 6, 8),
+					hWall(6, 8, 12),
+					hWall(6, 16, 20),
+					hWall(6, 23, 28),
+					vWall(10, 3, 5),
+					vWall(10, 9, 14),
+					vWall(20, 3, 5),
+					vWall(20, 9, 14),
+					hWall(9, 1, 4),
+					hWall(9, 7, 9),
+					hWall(9, 13, 19),
+					hWall(9, 22, 28),
+					vWall(24, 1, 5),
+					vWall(24, 9, 14),
+					hWall(12, 2, 6),
+					hWall(12, 11, 14),
+					hWall(12, 18, 23),
+					hWall(12, 25, 28),
+					vWall(5, 13, 17),
+					vWall(14, 13, 17),
+					vWall(24, 15, 20),
+					hWall(15, 1, 4),
+					hWall(15, 7, 13),
+					hWall(15, 17, 23),
+					hWall(15, 25, 28),
+					hWall(18, 2, 8),
+					hWall(18, 11, 16),
+					hWall(18, 19, 24),
+					vWall(9, 16, 20),
+					vWall(17, 16, 20),
+					vWall(25, 19, 24),
+					hWall(21, 1, 5),
+					hWall(21, 8, 14),
+					hWall(21, 18, 22),
+					hWall(21, 25, 28),
+					vWall(6, 22, 27),
+					vWall(14, 22, 27),
+					vWall(22, 22, 27),
+					hWall(24, 1, 5),
+					hWall(24, 8, 13),
+					hWall(24, 16, 21),
+					hWall(24, 24, 28),
+					vWall(3, 25, 28),
+					vWall(10, 25, 28),
+					vWall(19, 25, 27),
+					hWall(27, 2, 5),
+					hWall(27, 7, 12),
+					hWall(27, 15, 19),
+					hWall(27, 22, 27)
+				)
+			}
+		];
+
+		// Game state
+		var canvas, ctx;
+		var state = 'menu'; // menu, playing, levelComplete, gameOver, win
+		var currentLevel = 0;
+		var wallSet = {};
+		var timeLeft = 0;
+		var timerInterval = null;
+		var blueRow, blueCol, whiteRow, whiteCol;
+		var blueAtGoal, whiteAtGoal;
+		var pulsePhase = 0;
+		var drawInterval = null;
+
+		var hudLevel = document.getElementById('hudLevel');
+		var hudTimer = document.getElementById('hudTimer');
+		var overlay = document.getElementById('overlay');
+		var overlayTitle = document.getElementById('overlayTitle');
+		var overlayMsg = document.getElementById('overlayMsg');
+		var overlayHint = document.getElementById('overlayHint');
+
+		function init() {
+			canvas = document.getElementById('canvas');
+			ctx = canvas.getContext('2d');
+			showMenu();
+			drawInterval = setInterval(draw, 16);
+			window.addEventListener('keydown', handleKey, true);
+		}
+
+		function showMenu() {
+			state = 'menu';
+			stopTimer();
+			overlayTitle.textContent = 'MUTO & WUTO';
+			overlayMsg.textContent = 'Guide both players to their matching goals';
+			overlayHint.textContent = 'Press any key to start';
+			overlay.classList.remove('hidden');
+			hudLevel.textContent = 'Level ' + (currentLevel + 1) + ' / 5';
+			hudTimer.textContent = formatTime(levels[currentLevel].time);
+			hudTimer.classList.remove('urgent');
+			loadLevel(currentLevel);
+		}
+
+		function loadLevel(idx) {
+			var lvl = levels[idx];
+			wallSet = buildWallSet(lvl.walls);
+			blueRow = lvl.blueStart[0];
+			blueCol = lvl.blueStart[1];
+			whiteRow = lvl.whiteStart[0];
+			whiteCol = lvl.whiteStart[1];
+			blueAtGoal = false;
+			whiteAtGoal = false;
+			timeLeft = lvl.time;
+			hudLevel.textContent = 'Level ' + (idx + 1) + ' / 5';
+			hudTimer.textContent = formatTime(timeLeft);
+			hudTimer.classList.remove('urgent');
+		}
+
+		function startLevel() {
+			state = 'playing';
+			overlay.classList.add('hidden');
+			loadLevel(currentLevel);
+			startTimer();
+		}
+
+		function startTimer() {
+			stopTimer();
+			timerInterval = setInterval(function() {
+				timeLeft--;
+				hudTimer.textContent = formatTime(timeLeft);
+				if (timeLeft <= 5) hudTimer.classList.add('urgent');
+				if (timeLeft <= 0) {
+					stopTimer();
+					showGameOver();
+				}
+			}, 1000);
+		}
+
+		function stopTimer() {
+			if (timerInterval) {
+				clearInterval(timerInterval);
+				timerInterval = null;
+			}
+		}
+
+		function formatTime(s) {
+			var m = Math.floor(s / 60);
+			var sec = s % 60;
+			return m + ':' + (sec < 10 ? '0' : '') + sec;
+		}
+
+		function showLevelComplete() {
+			state = 'levelComplete';
+			stopTimer();
+			if (currentLevel >= 4) {
+				showWin();
+				return;
+			}
+			overlayTitle.textContent = 'LEVEL COMPLETE!';
+			overlayTitle.classList.add('gold');
+			overlayMsg.textContent = 'Time remaining: ' + formatTime(timeLeft);
+			overlayHint.textContent = 'Press any key for Level ' + (currentLevel + 2);
+			overlay.classList.remove('hidden');
+		}
+
+		function showGameOver() {
+			state = 'gameOver';
+			overlayTitle.textContent = 'TIME\'S UP!';
+			overlayTitle.classList.remove('gold');
+			overlayMsg.textContent = 'You ran out of time on Level ' + (currentLevel + 1);
+			overlayHint.textContent = 'Press any key to retry';
+			overlay.classList.remove('hidden');
+		}
+
+		function showWin() {
+			state = 'win';
+			overlayTitle.textContent = 'YOU WIN!';
+			overlayTitle.classList.add('gold');
+			overlayMsg.textContent = 'All 5 levels completed!';
+			overlayHint.textContent = 'Press any key to play again';
+			overlay.classList.remove('hidden');
+		}
+
+		function isWall(r, c) {
+			return wallSet[r + ',' + c] === true;
+		}
+
+		function handleKey(evt) {
+			if (state === 'menu') {
+				startLevel();
+				evt.preventDefault();
+				return;
+			}
+
+			if (state === 'levelComplete') {
+				currentLevel++;
+				overlayTitle.classList.remove('gold');
+				startLevel();
+				evt.preventDefault();
+				return;
+			}
+
+			if (state === 'gameOver') {
+				startLevel();
+				evt.preventDefault();
+				return;
+			}
+
+			if (state === 'win') {
+				currentLevel = 0;
+				overlayTitle.classList.remove('gold');
+				showMenu();
+				evt.preventDefault();
+				return;
+			}
+
+			if (state !== 'playing') return;
+
+			var moved = false;
+
+			// Blue player — arrow keys
+			if (!blueAtGoal) {
+				switch (evt.keyCode) {
+					case 38: // up
+						if (blueRow - 1 >= 0 && !isWall(blueRow - 1, blueCol)) blueRow--;
+						moved = true; break;
+					case 40: // down
+						if (blueRow + 1 < ROWS && !isWall(blueRow + 1, blueCol)) blueRow++;
+						moved = true; break;
+					case 37: // left
+						if (blueCol - 1 >= 0 && !isWall(blueRow, blueCol - 1)) blueCol--;
+						moved = true; break;
+					case 39: // right
+						if (blueCol + 1 < COLS && !isWall(blueRow, blueCol + 1)) blueCol++;
+						moved = true; break;
+				}
+			}
+
+			// White player — WASD
+			if (!whiteAtGoal) {
+				switch (evt.keyCode) {
+					case 87: // W
+						if (whiteRow - 1 >= 0 && !isWall(whiteRow - 1, whiteCol)) whiteRow--;
+						moved = true; break;
+					case 83: // S
+						if (whiteRow + 1 < ROWS && !isWall(whiteRow + 1, whiteCol)) whiteRow++;
+						moved = true; break;
+					case 65: // A
+						if (whiteCol - 1 >= 0 && !isWall(whiteRow, whiteCol - 1)) whiteCol--;
+						moved = true; break;
+					case 68: // D
+						if (whiteCol + 1 < COLS && !isWall(whiteRow, whiteCol + 1)) whiteCol++;
+						moved = true; break;
+				}
+			}
+
+			if (moved) {
+				evt.preventDefault();
+				checkGoals();
+			}
+		}
+
+		function checkGoals() {
+			var lvl = levels[currentLevel];
+			if (blueRow === lvl.blueGoal[0] && blueCol === lvl.blueGoal[1]) blueAtGoal = true;
+			if (whiteRow === lvl.whiteGoal[0] && whiteCol === lvl.whiteGoal[1]) whiteAtGoal = true;
+			if (blueAtGoal && whiteAtGoal) showLevelComplete();
+		}
+
+		function draw() {
+			pulsePhase += 0.05;
+			ctx.clearRect(0, 0, WIDTH, HEIGHT);
+
+			// Background
+			ctx.fillStyle = '#3a3a3a';
+			ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+			var lvl = levels[currentLevel];
+
+			// Draw walls
+			ctx.fillStyle = '#1a1a1a';
+			var wallArr = lvl.walls;
+			for (var i = 0; i < wallArr.length; i++) {
+				ctx.fillRect(wallArr[i][1] * GRID, wallArr[i][0] * GRID, GRID, GRID);
+			}
+
+			// Draw goals (pulsing)
+			var pulse = 0.2 + 0.15 * Math.sin(pulsePhase);
+
+			if (!blueAtGoal) {
+				ctx.fillStyle = 'rgba(74, 122, 255, ' + pulse + ')';
+				ctx.fillRect(lvl.blueGoal[1] * GRID, lvl.blueGoal[0] * GRID, GRID, GRID);
+				ctx.strokeStyle = '#4a7aff';
+				ctx.lineWidth = 2;
+				ctx.strokeRect(lvl.blueGoal[1] * GRID + 1, lvl.blueGoal[0] * GRID + 1, GRID - 2, GRID - 2);
+			}
+
+			if (!whiteAtGoal) {
+				ctx.fillStyle = 'rgba(255, 255, 255, ' + pulse + ')';
+				ctx.fillRect(lvl.whiteGoal[1] * GRID, lvl.whiteGoal[0] * GRID, GRID, GRID);
+				ctx.strokeStyle = '#ffffff';
+				ctx.lineWidth = 2;
+				ctx.strokeRect(lvl.whiteGoal[1] * GRID + 1, lvl.whiteGoal[0] * GRID + 1, GRID - 2, GRID - 2);
+			}
+
+			// Draw players
+			if (!blueAtGoal) {
+				ctx.fillStyle = '#4a7aff';
+				ctx.beginPath();
+				ctx.arc(blueCol * GRID + GRID / 2, blueRow * GRID + GRID / 2, 8, 0, Math.PI * 2);
+				ctx.fill();
+			} else {
+				// Show checkmark at goal
+				ctx.fillStyle = 'rgba(74, 122, 255, 0.5)';
+				ctx.fillRect(lvl.blueGoal[1] * GRID, lvl.blueGoal[0] * GRID, GRID, GRID);
+			}
+
+			if (!whiteAtGoal) {
+				ctx.fillStyle = '#ffffff';
+				ctx.beginPath();
+				ctx.arc(whiteCol * GRID + GRID / 2, whiteRow * GRID + GRID / 2, 8, 0, Math.PI * 2);
+				ctx.fill();
+			} else {
+				ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+				ctx.fillRect(lvl.whiteGoal[1] * GRID, lvl.whiteGoal[0] * GRID, GRID, GRID);
+			}
+		}
+
+		init();
+	})();
+	</script>
+</body>
+</html>
