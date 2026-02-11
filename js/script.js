@@ -3,7 +3,8 @@ $(window).on("load", function() {
 			$(".loader").fadeOut(750);
 		});
 
-			$(".items").isotope({
+	if ($.fn.isotope && $(".items").length) {
+		$(".items").isotope({
 			filter:'*',
 			animationOptions: {
 				duration: 1500,
@@ -11,6 +12,7 @@ $(window).on("load", function() {
 				queue: false
 			}
 		});
+	}
 });
 
 $(document).ready(function() {
@@ -25,9 +27,15 @@ $(document).ready(function() {
 		});
 	}
 
+	if ($.fn.fancybox && $("[data-fancybox]").length) {
 		$("[data-fancybox]").fancybox();
+	}
 
-		$("#filters a").click(function() {
+	$("#filters a").click(function() {
+		if (!$.fn.isotope || !$(".items").length) {
+			return false;
+		}
+
 			$("#filters .current").removeClass("current");
 			$(this).addClass("current");
 
@@ -45,10 +53,11 @@ $(document).ready(function() {
 			return false;
 	});
 
-		$("#navigation li a[href^='#']").click(function(e) {
+	$("#navigation li a[href^='#']").click(function(e) {
 			e.preventDefault();
 
 			var targetElement = $(this).attr("href");
+			if (!$(targetElement).length) return;
 			var targetPostion = $(targetElement).offset().top;
 			$("html, body").animate({ scrollTop: targetPostion - 80 }, "slow");
 		});
