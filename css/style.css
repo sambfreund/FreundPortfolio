@@ -744,7 +744,69 @@ body {
 .loader .inner {
 	width: 100%;
 	height: 100%;
-	background: url(../images/loader.gif) center center no-repeat;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+}
+
+.ramen-loader {
+	overflow: visible;
+}
+
+.ramen-bowl {
+	fill: none;
+	stroke: var(--color-accent);
+	stroke-width: 3;
+	stroke-linecap: round;
+}
+
+.ramen-noodles {
+	fill: none;
+	stroke: var(--color-accent);
+	stroke-width: 2;
+	stroke-linecap: round;
+	opacity: 0.7;
+}
+
+.ramen-chopstick {
+	stroke: var(--color-accent);
+	stroke-width: 2.5;
+	stroke-linecap: round;
+	opacity: 0.8;
+}
+
+.steam {
+	fill: none;
+	stroke: var(--color-accent);
+	stroke-width: 2;
+	stroke-linecap: round;
+	opacity: 0;
+	animation: steam-rise 2s ease-in-out infinite;
+}
+
+.steam-2 {
+	animation-delay: 0.4s;
+}
+
+.steam-3 {
+	animation-delay: 0.8s;
+}
+
+@keyframes steam-rise {
+	0% {
+		opacity: 0;
+		transform: translateY(0);
+	}
+	30% {
+		opacity: 0.5;
+	}
+	70% {
+		opacity: 0.3;
+	}
+	100% {
+		opacity: 0;
+		transform: translateY(-10px);
+	}
 }
 
 /* Blog page */
