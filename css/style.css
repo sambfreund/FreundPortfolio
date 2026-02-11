@@ -815,6 +815,69 @@ body {
 	min-height: calc(100vh - 200px);
 }
 
+.blog-index-title {
+	font-size: 2rem;
+	font-weight: 600;
+	color: var(--color-text);
+	margin: 0 0 32px 0;
+}
+
+.blog-index-card {
+	display: block;
+	background: var(--color-bg-alt);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-lg);
+	padding: 28px;
+	margin-bottom: 20px;
+	text-decoration: none;
+	transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.blog-index-card:hover {
+	border-color: var(--color-accent);
+	box-shadow: var(--shadow-md);
+	text-decoration: none;
+}
+
+.blog-index-card .blog-date {
+	display: block;
+	font-size: 0.8rem;
+	color: var(--color-accent);
+	font-weight: 500;
+	margin-bottom: 8px;
+}
+
+.blog-index-card h2 {
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: var(--color-text);
+	margin: 0 0 8px 0;
+}
+
+.blog-index-card p {
+	font-size: 0.95rem;
+	color: var(--color-text-muted);
+	line-height: 1.6;
+	margin: 0 0 12px 0;
+}
+
+.blog-back-link {
+	display: inline-block;
+	font-size: 0.85rem;
+	color: var(--color-text-muted);
+	text-decoration: none;
+	margin-bottom: 16px;
+	transition: color 0.2s;
+}
+
+.blog-back-link:hover {
+	color: var(--color-accent);
+}
+
+.blog-back-link i {
+	margin-right: 6px;
+}
+
 .blog-post {
 	background: var(--color-bg-alt);
 	border: 1px solid var(--color-border);

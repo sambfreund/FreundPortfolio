@@ -1,0 +1,14 @@
+[
+	{
+		"slug": "welcome",
+		"title": "Welcome to the Blog",
+		"date": "2025-02-10",
+		"excerpt": "A fresh start for the blog. Expect posts about tech, quality engineering, books, and whatever else crosses my mind."
+	},
+	{
+		"slug": "daily-news",
+		"title": "Daily News",
+		"date": "2019-02-01",
+		"excerpt": "Reflections on the longest months of the year, favorite reads, and the unique experience of Sleeping Giants by Sylvain Neuvel."
+	}
+]

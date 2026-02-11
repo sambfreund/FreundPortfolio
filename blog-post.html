@@ -56,17 +56,23 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-lg-8">
-					<h1 class="blog-index-title">Blog</h1>
-					<div id="blog-list">
-						<p style="color: var(--color-text-muted);">Loading posts...</p>
-					</div>
+					<article class="blog-post">
+						<header class="blog-post-header">
+							<a href="blog.html" class="blog-back-link"><i class="fas fa-arrow-left"></i> All posts</a>
+							<h1 id="post-title"></h1>
+							<time id="post-date" class="blog-post-date"></time>
+						</header>
+						<div id="post-content" class="blog-post-content">
+							<p style="color: var(--color-text-muted);">Loading...</p>
+						</div>
+					</article>
 				</div>
 				<aside class="col-lg-4">
 					<div class="blog-sidebar">
 						<div class="blog-sidebar-card">
 							<img class="blog-sidebar-image" src="images/samanddogs.jpg" alt="Sam with dogs" loading="lazy">
 							<h3>About Me</h3>
-							<p>Hi, I'm Sam. Nerdy human and dog dad by day and night, and a bunch of other things when the world pauses.</p>
+							<p>Hi, I'm Sam. Nerdy human and dog dad by day and night, and a bunch of other things between the cracks.</p>
 							<div class="blog-sidebar-socials">
 								<a href="https://x.com/suhham" class="socialLink" aria-label="X" target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i></a>
 								<a href="https://www.instagram.com/suhham" class="socialLink" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
@@ -83,42 +89,46 @@
 	</footer>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 	<script>
 		(function() {
-			var fallbackPosts = [
-				{ slug: "welcome", title: "Welcome to the Blog", date: "2025-02-10", excerpt: "A fresh start for the blog. Expect posts about tech, quality engineering, books, and whatever else crosses my mind." },
-				{ slug: "daily-news", title: "Daily News", date: "2019-02-01", excerpt: "Reflections on the longest months of the year, favorite reads, and the unique experience of Sleeping Giants by Sylvain Neuvel." }
-			];
-
-			function renderPosts(posts) {
-				posts.sort(function(a, b) {
-					return new Date(b.date) - new Date(a.date);
-				});
-
-				var container = document.getElementById('blog-list');
-				if (posts.length === 0) {
-					container.innerHTML = '<p style="color: var(--color-text-muted);">No posts yet. Check back soon!</p>';
-					return;
-				}
-
-				var html = '';
-				posts.forEach(function(post) {
-					var date = new Date(post.date + 'T00:00:00');
-					var formatted = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-					html += '<a href="blog-post.html?post=' + post.slug + '" class="blog-index-card">';
-					html += '<time class="blog-date">' + formatted + '</time>';
-					html += '<h2>' + post.title + '</h2>';
-					html += '<p>' + post.excerpt + '</p>';
-					html += '<span class="blog-link">Read more <i class="fas fa-arrow-right"></i></span>';
-					html += '</a>';
-				});
-				container.innerHTML = html;
+			var params = new URLSearchParams(window.location.search);
+			var slug = params.get('post');
+			if (!slug) {
+				window.location.href = 'blog.html';
+				return;
 			}
 
 			fetch('posts/posts.json')
 				.then(function(r) { return r.json(); })
-				.then(renderPosts)
-				.catch(function() { renderPosts(fallbackPosts); });
+				.then(function(posts) {
+					var post = posts.find(function(p) { return p.slug === slug; });
+					if (!post) {
+						document.getElementById('post-title').textContent = 'Post not found';
+						document.getElementById('post-content').innerHTML = '<p>Sorry, that post doesn\'t exist. <a href="blog.html">Back to blog</a></p>';
+						return;
+					}
+
+					document.getElementById('post-title').textContent = post.title;
+					document.title = post.title + ' — Sam Freund';
+
+					var date = new Date(post.date + 'T00:00:00');
+					document.getElementById('post-date').textContent = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+					document.getElementById('post-date').setAttribute('datetime', post.date);
+
+					return fetch('posts/' + slug + '.md');
+				})
+				.then(function(r) {
+					if (!r) return;
+					return r.text();
+				})
+				.then(function(md) {
+					if (!md) return;
+					document.getElementById('post-content').innerHTML = marked.parse(md);
+				})
+				.catch(function() {
+					document.getElementById('post-content').innerHTML = '<p>Error loading post. <a href="blog.html">Back to blog</a></p>';
+				});
 		})();
 	</script>
 </body>
