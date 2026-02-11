@@ -15,13 +15,15 @@ $(window).on("load", function() {
 
 $(document).ready(function() {
 
-	var typed = new Typed(".typed", {
- 		strings: ["Senior Quality Engineer.", "Father.", "Designer.", "Husband.", "Developer.", "Life Long Learner."],
- 		typeSpeed: 80,
- 		loop: true,
- 		startDelay: 1000,
- 		showCursor: false
- 	});
+	if (typeof Typed !== 'undefined' && document.querySelector(".typed")) {
+		var typed = new Typed(".typed", {
+			strings: ["Senior Quality Engineer.", "Father.", "Designer.", "Husband.", "Developer.", "Life Long Learner."],
+			typeSpeed: 80,
+			loop: true,
+			startDelay: 1000,
+			showCursor: false
+		});
+	}
 
 		$("[data-fancybox]").fancybox();
 

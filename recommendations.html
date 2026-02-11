@@ -1,36 +1,30 @@
 <!DOCTYPE html>
-<html>
-
-
+<html lang="en">
 <head>
+	<!-- Global site tag (gtag.js) - Google Analytics -->
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133573703-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag(){dataLayer.push(arguments);}
+		gtag('js', new Date());
+		gtag('config', 'UA-133573703-1');
+	</script>
 
-<!-- Global site tag (gtag.js) - Google Analytics -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133573703-1"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'UA-133573703-1');
-</script>
-
-	<title>S. Freund Portfolio</title>
-
-	<!-- Mobile -->
+	<title>Recommendations — Sam Freund</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-<!-- Bootstrap CDN -->
+	<!-- Bootstrap CDN -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
 
 	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+		crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 	<!-- Style CSS -->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="stylesheet" type="text/css" href="css/recs.css">
-
+	<link rel="icon" type="image/x-icon" href="/images/icons/smalllogo.ico">
 </head>
-
 <body>
 
 	<nav id="navigation" class="navbar navbar-expand-lg">
@@ -60,121 +54,410 @@
 		</div>
 	</nav>
 
-	<div id="stats" class="statsSection">
+	<div class="recs-page section">
 		<div class="container">
 			<div class="row">
-				<H2 class="recsHeader">Here are a few of my favorite things!</H2>
-
-				<!-- Filters -->
-				<div id="myBtnContainer">
-					<button class="btn active" onclick="filterSelection('all')"> Show all</button>
-					<button class="btn" onclick="filterSelection('books')"> Books</button>
-					<button class="btn" onclick="filterSelection('movies')"> Movies</button>
-					<button class="btn" onclick="filterSelection('games')"> Games</button>
-					<button class="btn" onclick="filterSelection('recipes')">Recipes</button>
-					<button class="btn" onclick="filterSelection('songs')">Songs</button>
+				<div class="col-12 text-center section-header">
+					<h2>RECOMMENDATIONS</h2>
+					<p class="subHeading">A few of my favorite things. Check the ones you like and copy your list!</p>
 				</div>
 			</div>
-
-			<span></span>
 
 			<div class="row">
-				<div class="stuffcontainer">
-					<div class="filterDiv books"><a href="https://www.goodreads.com/book/show/18144590-the-alchemist" target="_blank">The Alchemist</a></div>
-					<div class="filterDiv movies">Inception</div>
-					<div class="filterDiv games">The Legend of Zelda: Ocarina of Time</div>
-					<div class="filterDiv recipes">Banana Pancakes</div>
-					<div class="filterDiv recipes">Ebelskiver</div>
-					<div class="filterDiv recipes">Two Ingredient Bread</div>
-					<div class="filterDiv movies">Rocky</div>
-					<div class="filterDiv movies">The Dark Knight</div>
-					<div class="filterDiv movies">Billy Madison</div>
-					<div class="filterDiv games">Monster Train</div>
-					<div class="filterDiv movies">Forrest Gump</div>
-					<div class="filterDiv games">Subnautica</div>
-					<div class="filterDiv games">Half-Life Alyx</div>
-					<div class="filterDiv movies">Gladiator</div>
-					<div class="filterDiv books">Harry Potter and the Sorcerer's Stone</div>
-					<div class="filterDiv books">Saga, Book One</div>
-					<div class="filterDiv books">The Bassoon King</div>
-					<div class="filterDiv books">Beneath a Scarlet Sky</div>
-					<div class="filterDiv books">Why Fish Don't Exist</div>
-					<div class="filterDiv books">Tribe</div>
-					<div class="filterDiv books">The Midnight Library</div>
-					<div class="filterDiv books">Project Hail Mary</div>
-					<div class="filterDiv books">A New Reality</div>
+				<div class="col-12 recs-filters">
+					<ul id="rec-filters">
+						<li><a href="#" data-filter="all" class="current">All</a></li>
+						<li><a href="#" data-filter="books">Books</a></li>
+						<li><a href="#" data-filter="movies">Movies</a></li>
+						<li><a href="#" data-filter="games">Games</a></li>
+						<li><a href="#" data-filter="recipes">Recipes</a></li>
+						<li><a href="#" data-filter="songs">Songs</a></li>
+					</ul>
 				</div>
+			</div>
 
-				<script>
-					filterSelection("all")
-					function filterSelection(c) {
-					var x, i;
-					x = document.getElementsByClassName("filterDiv");
-					if (c == "all") c = "";
-					// Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
-					for (i = 0; i < x.length; i++) {
-						removeRecommendation(x[i], "show");
-						if (x[i].className.indexOf(c) > -1) myRecommendations(x[i], "show");
-					}
-					}
+			<div class="row">
+				<div class="col-12">
+					<div class="recs-grid" id="recs-grid">
 
-					// Show filtered elements
-					function myRecommendations(element, name) {
-					var i, arr1, arr2;
-					arr1 = element.className.split(" ");
-					arr2 = name.split(" ");
-					for (i = 0; i < arr2.length; i++) {
-						if (arr1.indexOf(arr2[i]) == -1) {
-						element.className += " " + arr2[i];
-						}
-					}
-					}
+						<!-- Books -->
+						<label class="rec-card" data-category="books">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-books">Book</span>
+								<span class="rec-title">The Alchemist</span>
+								<span class="rec-desc">A shepherd's journey to find his personal legend. Simple but thought-provoking.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="books">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-books">Book</span>
+								<span class="rec-title">Harry Potter and the Sorcerer's Stone</span>
+								<span class="rec-desc">The one that started it all. Pure magic and nostalgia.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="books">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-books">Book</span>
+								<span class="rec-title">Saga, Book One</span>
+								<span class="rec-desc">Epic space opera graphic novel with incredible art and storytelling.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="books">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-books">Book</span>
+								<span class="rec-title">The Bassoon King</span>
+								<span class="rec-desc">Rainn Wilson's memoir. Funny, honest, and surprisingly deep.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="books">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-books">Book</span>
+								<span class="rec-title">Beneath a Scarlet Sky</span>
+								<span class="rec-desc">A WWII story based on real events that reads like a thriller.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="books">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-books">Book</span>
+								<span class="rec-title">Why Fish Don't Exist</span>
+								<span class="rec-desc">Part biography, part memoir. A wild ride about order, chaos, and meaning.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="books">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-books">Book</span>
+								<span class="rec-title">Tribe</span>
+								<span class="rec-desc">Short but powerful read on belonging and what we've lost in modern life.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="books">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-books">Book</span>
+								<span class="rec-title">The Midnight Library</span>
+								<span class="rec-desc">A woman explores the lives she could have lived. Comforting and reflective.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="books">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-books">Book</span>
+								<span class="rec-title">Project Hail Mary</span>
+								<span class="rec-desc">Competence-driven sci-fi with humor, puzzles, and heart.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="books">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-books">Book</span>
+								<span class="rec-title">A New Reality</span>
+								<span class="rec-desc">A fresh perspective on how we shape the world around us.</span>
+							</div>
+						</label>
 
-					// Hide elements that are not selected
-					function removeRecommendation(element, name) {
-					var i, arr1, arr2;
-					arr1 = element.className.split(" ");
-					arr2 = name.split(" ");
-					for (i = 0; i < arr2.length; i++) {
-						while (arr1.indexOf(arr2[i]) > -1) {
-						arr1.splice(arr1.indexOf(arr2[i]), 1);
-						}
-					}
-					element.className = arr1.join(" ");
-					}
+						<!-- Movies -->
+						<label class="rec-card" data-category="movies">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-movies">Movie</span>
+								<span class="rec-title">Inception</span>
+								<span class="rec-desc">Dreams within dreams. The kind of movie that rewards repeat watches.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="movies">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-movies">Movie</span>
+								<span class="rec-title">Rocky</span>
+								<span class="rec-desc">The ultimate underdog story. It's really about heart, not boxing.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="movies">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-movies">Movie</span>
+								<span class="rec-title">The Dark Knight</span>
+								<span class="rec-desc">Heath Ledger's Joker elevates this into something unforgettable.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="movies">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-movies">Movie</span>
+								<span class="rec-title">Billy Madison</span>
+								<span class="rec-desc">Peak Adam Sandler absurdity. Endlessly quotable.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="movies">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-movies">Movie</span>
+								<span class="rec-title">Forrest Gump</span>
+								<span class="rec-desc">A simple man's extraordinary journey through American history.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="movies">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-movies">Movie</span>
+								<span class="rec-title">Gladiator</span>
+								<span class="rec-desc">Epic revenge story with one of the best soundtracks ever made.</span>
+							</div>
+						</label>
 
-					// Add active class to the current control button (highlight it)
-					var btnContainer = document.getElementById("myBtnContainer");
-					var btns = btnContainer.getElementsByClassName("btn");
-					for (var i = 0; i < btns.length; i++) {
-					btns[i].addEventListener("click", function() {
-						var current = document.getElementsByClassName("active");
-						current[0].className = current[0].className.replace(" active", "");
-						this.className += " active";
-					});
-					}
+						<!-- Games -->
+						<label class="rec-card" data-category="games">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-games">Game</span>
+								<span class="rec-title">The Legend of Zelda: Ocarina of Time</span>
+								<span class="rec-desc">The gold standard for adventure games. Still holds up.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="games">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-games">Game</span>
+								<span class="rec-title">Monster Train</span>
+								<span class="rec-desc">Deckbuilder meets tower defense on a train to hell. Seriously fun.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="games">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-games">Game</span>
+								<span class="rec-title">Subnautica</span>
+								<span class="rec-desc">Underwater survival that nails exploration and atmosphere.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="games">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-games">Game</span>
+								<span class="rec-title">Half-Life Alyx</span>
+								<span class="rec-desc">The VR game that proved the medium. Jaw-dropping from start to finish.</span>
+							</div>
+						</label>
 
-				</script>
+						<!-- Recipes -->
+						<label class="rec-card" data-category="recipes">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-recipes">Recipe</span>
+								<span class="rec-title">Banana Pancakes</span>
+								<span class="rec-desc">Weekend morning staple. Simple, sweet, and always a hit.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="recipes">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-recipes">Recipe</span>
+								<span class="rec-title">Ebelskiver</span>
+								<span class="rec-desc">Danish pancake balls. Fun to make and even better to eat.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="recipes">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-recipes">Recipe</span>
+								<span class="rec-title">Two Ingredient Bread</span>
+								<span class="rec-desc">Self-rising flour and Greek yogurt. That's it. Surprisingly good.</span>
+							</div>
+						</label>
+
+						<!-- Songs -->
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">The Lily</span>
+								<span class="rec-desc">Blanco White. Warm, open, and feels like golden hour.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">The Lime Tree</span>
+								<span class="rec-desc">Trevor Hall. Laid-back folk with a grounding, earthy vibe.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">A Little Bit of Everything</span>
+								<span class="rec-desc">Dawes. A storytelling masterpiece about life's big moments.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">Heaven's Knife</span>
+								<span class="rec-desc">Josh Garrels. Haunting and beautiful. Gets better every listen.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">Missing</span>
+								<span class="rec-desc">William Michael Morgan. Country done right. Honest and heartfelt.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">Butterflies</span>
+								<span class="rec-desc">Samsa. Lo-fi spoken word that hits you right in the chest.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">Sharks in the Swimming Pool</span>
+								<span class="rec-desc">Clairity. Synth-pop with an edge. Catchy and a little dangerous.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">Liar</span>
+								<span class="rec-desc">The Arcadian Wild. Folk harmonies that feel like a campfire singalong.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">I'd Like To Walk Around In Your Mind</span>
+								<span class="rec-desc">Vashti Bunyan. Delicate and dreamy. Like a whispered lullaby.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">Bubble of my Gum</span>
+								<span class="rec-desc">DURRY. Playful indie rock with a sticky hook.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">Highroad</span>
+								<span class="rec-desc">Sir Woman. Groovy, soulful, and impossible not to move to.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">Green Mountain State</span>
+								<span class="rec-desc">Trevor Hall. Acoustic wanderlust. Makes you want to be outside.</span>
+							</div>
+						</label>
+						<label class="rec-card" data-category="songs">
+							<input type="checkbox" class="rec-check">
+							<div class="rec-body">
+								<span class="rec-tag rec-tag-songs">Song</span>
+								<span class="rec-title">Wondering Why</span>
+								<span class="rec-desc">The Red Clay Strays. Raw southern rock with real soul behind it.</span>
+							</div>
+						</label>
+
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
 
-	<div  class="contactSection-blog section-blog">
-		<div class="col-md-12 text-center">
-			<h2>Let's chat!</h2>
-      <p class="subHeading">If you'd like to get in contact feel free to drop me an e-mail here.</p>
-			<a href="mailTo:sambfreund@gmail.com" class="contactButton-blog">Email</a>
-		</div>
+	<!-- Floating "My List" bar -->
+	<div class="rec-list-bar" id="rec-list-bar">
+		<span class="rec-list-count" id="rec-list-count">0 selected</span>
+		<button class="rec-copy-btn" id="rec-copy-btn" type="button">
+			<i class="fas fa-copy"></i> Copy List
+		</button>
 	</div>
 
-	<div class="copyrightSection">
-		<div class="col-md-12 text-center">
-			<p>&copy; Copyright Sam Freund 2023</p>
-		</div>
-	</div>
+	<footer class="copyrightSection">
+		<p>&copy; Sam Freund 2025</p>
+	</footer>
 
-	<!-- Bootstrap CDN -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-</body>
+	<script>
+		(function() {
+			// Filtering
+			var filterLinks = document.querySelectorAll('#rec-filters a');
+			var cards = document.querySelectorAll('.rec-card');
 
+			filterLinks.forEach(function(link) {
+				link.addEventListener('click', function(e) {
+					e.preventDefault();
+					document.querySelector('#rec-filters .current').classList.remove('current');
+					this.classList.add('current');
+
+					var filter = this.getAttribute('data-filter');
+					cards.forEach(function(card) {
+						if (filter === 'all' || card.getAttribute('data-category') === filter) {
+							card.style.display = '';
+						} else {
+							card.style.display = 'none';
+						}
+					});
+				});
+			});
+
+			// Checkbox list builder
+			var listBar = document.getElementById('rec-list-bar');
+			var listCount = document.getElementById('rec-list-count');
+			var copyBtn = document.getElementById('rec-copy-btn');
+
+			function updateList() {
+				var checked = document.querySelectorAll('.rec-check:checked');
+				var count = checked.length;
+
+				if (count > 0) {
+					listBar.classList.add('visible');
+					listCount.textContent = count + ' selected';
+				} else {
+					listBar.classList.remove('visible');
+				}
+			}
+
+			document.getElementById('recs-grid').addEventListener('change', updateList);
+
+			copyBtn.addEventListener('click', function() {
+				var checked = document.querySelectorAll('.rec-check:checked');
+				var lines = [];
+				checked.forEach(function(cb) {
+					var card = cb.closest('.rec-card');
+					var tag = card.querySelector('.rec-tag').textContent;
+					var title = card.querySelector('.rec-title').textContent;
+					lines.push(tag + ': ' + title);
+				});
+
+				var text = lines.join('\n');
+				navigator.clipboard.writeText(text).then(function() {
+					copyBtn.innerHTML = '<i class="fas fa-check"></i> Copied!';
+					setTimeout(function() {
+						copyBtn.innerHTML = '<i class="fas fa-copy"></i> Copy List';
+					}, 2000);
+				});
+			});
+		})();
+	</script>
+</body>
 </html>

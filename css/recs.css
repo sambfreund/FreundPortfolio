@@ -1,69 +1,232 @@
-.recsHeader {
-	font-family: Arial;
-	width: 100%;
-	padding: 20px;
+/* Recommendations Page */
+.recs-page {
+	background: var(--color-bg);
+	min-height: calc(100vh - 200px);
+}
+
+/* Filters — matches portfolio filter style */
+.recs-filters {
 	text-align: center;
+	margin-bottom: 40px;
 }
 
-.filterDiv {
-	float: left;
-	background-color: #5e0202;
-	color: #ffffff;
-	width: fit-content;
-	max-width: auto;
-	min-width: 85px;
-	overflow-wrap: break-word;
-	line-height: auto;
-	text-align: center;
-	margin: 3px;
-	padding: 10px;
-	display: none;
+.recs-filters ul {
+	list-style: none;
+	padding: 0;
+	margin: 0;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	gap: 8px;
 }
 
-/* The "show" class is added to the filtered elements */
-.show {
-	display: block;
+.recs-filters a {
+	display: inline-block;
+	padding: 8px 16px;
+	border-radius: var(--radius);
+	color: var(--color-text-muted);
+	text-decoration: none;
+	font-size: 0.9rem;
+	transition: all 0.2s;
+	border: 1px solid var(--color-border);
 }
 
-/* Style the buttons */
-.btn {
-	border: none;
-	outline: none;
-	padding: 12px 16px;
-	background-color: #f1f1f1;
+.recs-filters a:hover {
+	color: var(--color-accent);
+	border-color: var(--color-accent);
+}
+
+.recs-filters .current {
+	background: var(--color-accent);
+	color: #fff !important;
+	border-color: var(--color-accent);
+}
+
+/* Card grid */
+.recs-grid {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+	gap: 12px;
+}
+
+/* Individual card */
+.rec-card {
+	display: flex;
+	align-items: flex-start;
+	gap: 12px;
+	padding: 16px 20px;
+	background: var(--color-bg-alt);
+	border: 1px solid var(--color-border);
+	border-radius: var(--radius-lg);
 	cursor: pointer;
+	transition: border-color 0.2s, box-shadow 0.2s;
+	user-select: none;
 }
 
-/* Add a light grey background on mouse-over */
-.btn:hover {
-	background-color: #efffb4;
+.rec-card:hover {
+	border-color: var(--color-accent);
+	box-shadow: var(--shadow-md);
 }
 
-/* Add a dark background to the active button */
-.btn.active {
-	background-color: #920000;
-	color: white;
-}
-.filterDiv a {
-  color: white;
+.rec-card:has(.rec-check:checked) {
+	border-color: var(--color-accent);
+	background: var(--color-accent-subtle);
 }
 
-.container {
-  min-height: 400px;
+/* Checkbox */
+.rec-check {
+	appearance: none;
+	width: 18px;
+	height: 18px;
+	min-width: 18px;
+	margin-top: 2px;
+	border: 2px solid var(--color-border);
+	border-radius: 4px;
+	cursor: pointer;
+	transition: all 0.15s;
+	position: relative;
 }
 
-.movies {
-  background-color: #3d3ea0;
+.rec-check:checked {
+	background: var(--color-accent);
+	border-color: var(--color-accent);
 }
-.books {
-  background-color: #0056b3;
+
+.rec-check:checked::after {
+	content: '';
+	position: absolute;
+	left: 4px;
+	top: 1px;
+	width: 6px;
+	height: 10px;
+	border: solid #fff;
+	border-width: 0 2px 2px 0;
+	transform: rotate(45deg);
 }
-.games {
-  background-color: #4e4f8a;
+
+/* Card body (wraps tag, title, desc) */
+.rec-body {
+	display: flex;
+	flex-direction: column;
+	gap: 4px;
+	min-width: 0;
 }
-.recipes {
-  background-color: #7a0da6;
+
+/* Tag (category label) */
+.rec-tag {
+	font-size: 0.7rem;
+	font-weight: 600;
+	text-transform: uppercase;
+	letter-spacing: 1px;
+	padding: 3px 8px;
+	border-radius: 4px;
+	white-space: nowrap;
+	align-self: flex-start;
 }
-.songs {
-  background-color: #5c2b24;
+
+/* Category colors */
+.rec-tag-books {
+	color: #4a7fb5;
+	background: rgba(74, 127, 181, 0.12);
+}
+
+.rec-tag-movies {
+	color: #b55a4a;
+	background: rgba(181, 90, 74, 0.12);
+}
+
+.rec-tag-games {
+	color: #6a4ab5;
+	background: rgba(106, 74, 181, 0.12);
+}
+
+.rec-tag-recipes {
+	color: #4a9e6a;
+	background: rgba(74, 158, 106, 0.12);
+}
+
+.rec-tag-songs {
+	color: var(--color-accent);
+	background: var(--color-accent-subtle);
+}
+
+/* Title */
+.rec-title {
+	font-size: 0.95rem;
+	color: var(--color-text);
+	font-weight: 500;
+}
+
+/* Description (optional) */
+.rec-desc {
+	font-size: 0.8rem;
+	color: var(--color-text-muted);
+	line-height: 1.4;
+}
+
+/* Floating list bar */
+.rec-list-bar {
+	position: fixed;
+	bottom: -80px;
+	left: 50%;
+	transform: translateX(-50%);
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 14px 24px;
+	background: var(--color-text);
+	color: #fff;
+	border-radius: var(--radius-lg);
+	box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+	transition: bottom 0.3s ease;
+	z-index: 200;
+}
+
+.rec-list-bar.visible {
+	bottom: 32px;
+}
+
+.rec-list-count {
+	font-size: 0.9rem;
+	font-weight: 500;
+	white-space: nowrap;
+}
+
+.rec-copy-btn {
+	appearance: none;
+	border: none;
+	background: var(--color-accent);
+	color: #fff;
+	padding: 8px 16px;
+	border-radius: var(--radius);
+	font-size: 0.85rem;
+	font-weight: 600;
+	cursor: pointer;
+	transition: background 0.2s;
+	white-space: nowrap;
+}
+
+.rec-copy-btn:hover {
+	background: var(--color-accent-hover);
+}
+
+.rec-copy-btn i {
+	margin-right: 4px;
+}
+
+/* Responsive */
+@media (max-width: 576px) {
+	.recs-grid {
+		grid-template-columns: 1fr;
+	}
+
+	.rec-list-bar {
+		left: 16px;
+		right: 16px;
+		transform: none;
+	}
+
+	.rec-list-bar.visible {
+		bottom: 16px;
+	}
 }
