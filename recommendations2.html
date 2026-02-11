@@ -1,0 +1,449 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>3D Parallax Recommendation Gallery</title>
+  <style>
+    :root{
+      --bg: #0b1020;
+      --card: rgba(255,255,255,.06);
+      --card2: rgba(255,255,255,.10);
+      --stroke: rgba(255,255,255,.14);
+      --text: rgba(255,255,255,.92);
+      --muted: rgba(255,255,255,.72);
+      --shadow: 0 25px 60px rgba(0,0,0,.55);
+      --radius: 18px;
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(1200px 600px at 15% 10%, rgba(104,164,255,.22), transparent 60%),
+        radial-gradient(900px 500px at 85% 30%, rgba(255,96,163,.18), transparent 55%),
+        radial-gradient(900px 700px at 50% 90%, rgba(102,255,204,.12), transparent 60%),
+        var(--bg);
+      overflow-x: hidden;
+    }
+
+    header{
+      padding: 28px 20px 12px;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    header h1{
+      margin: 0 0 6px;
+      font-weight: 760;
+      letter-spacing: -0.02em;
+      font-size: clamp(22px, 3.2vw, 34px);
+    }
+    header p{
+      margin: 0;
+      color: var(--muted);
+      max-width: 70ch;
+      line-height: 1.45;
+    }
+
+    /* Scene: holds the 3D stage */
+    .scene{
+      --rx: 0deg;
+      --ry: 0deg;
+      --mx: 0; /* -1..1 */
+      --my: 0; /* -1..1 */
+      max-width: 1200px;
+      margin: 14px auto 56px;
+      padding: 0 16px;
+    }
+
+    /* 3D stage */
+    .stage{
+      position: relative;
+      perspective: 900px;
+      perspective-origin: 50% 40%;
+      border-radius: calc(var(--radius) + 8px);
+      padding: 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+      border: 1px solid rgba(255,255,255,.08);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    /* optional soft noise-ish sheen */
+    .stage::before{
+      content:"";
+      position:absolute;
+      inset:-1px;
+      background:
+        radial-gradient(800px 240px at 50% 0%, rgba(255,255,255,.08), transparent 60%),
+        radial-gradient(500px 400px at 10% 70%, rgba(255,255,255,.06), transparent 60%),
+        radial-gradient(420px 320px at 90% 80%, rgba(255,255,255,.05), transparent 60%);
+      pointer-events:none;
+      z-index: 0;
+      mix-blend-mode: screen;
+    }
+
+    /* The 3D container that rotates */
+    .world{
+      position: relative;
+      transform-style: preserve-3d;
+      transform:
+        rotateX(var(--rx))
+        rotateY(var(--ry));
+      transition: transform 120ms ease-out;
+      z-index: 1;
+    }
+
+    /* Background decorative layers (deeper planes) */
+    .layer{
+      position: absolute;
+      inset: -60px;
+      transform-style: preserve-3d;
+      pointer-events: none;
+      opacity: .9;
+      filter: blur(.0px);
+    }
+
+    .layer.layer-back{
+      transform: translateZ(-220px) scale(1.25);
+      opacity: .55;
+    }
+    .layer.layer-mid{
+      transform: translateZ(-120px) scale(1.10);
+      opacity: .75;
+    }
+
+    .blob{
+      position:absolute;
+      width: 420px;
+      height: 420px;
+      border-radius: 999px;
+      filter: blur(0px);
+      opacity: .9;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.22), rgba(255,255,255,0) 60%);
+      mix-blend-mode: screen;
+    }
+    .blob.b1{ left: -80px; top: -120px; background: radial-gradient(circle at 30% 30%, rgba(104,164,255,.35), rgba(104,164,255,0) 60%); }
+    .blob.b2{ right: -120px; top: 40px; background: radial-gradient(circle at 30% 30%, rgba(255,96,163,.28), rgba(255,96,163,0) 60%); }
+    .blob.b3{ left: 30%; bottom: -220px; background: radial-gradient(circle at 30% 30%, rgba(102,255,204,.22), rgba(102,255,204,0) 60%); }
+
+    /* Grid of recommendation cards */
+    .grid{
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 14px;
+      transform-style: preserve-3d;
+      padding: 6px 0 2px;
+    }
+
+    .card{
+      grid-column: span 4;
+      min-height: 170px;
+      border-radius: var(--radius);
+      border: 1px solid var(--stroke);
+      background: linear-gradient(180deg, var(--card), rgba(255,255,255,.03));
+      box-shadow: 0 10px 35px rgba(0,0,0,.35);
+      position: relative;
+      overflow: hidden;
+      transform-style: preserve-3d;
+      transform:
+        translateZ(var(--z, 0px))
+        translateX(calc(var(--mx) * var(--xStrength, 10px)))
+        translateY(calc(var(--my) * var(--yStrength, 10px)));
+      transition:
+        transform 140ms ease-out,
+        background 180ms ease-out,
+        border-color 180ms ease-out;
+    }
+
+    .card::before{
+      /* moving highlight */
+      content:"";
+      position:absolute;
+      inset:-2px;
+      background:
+        radial-gradient(260px 160px at
+          calc(50% + (var(--mx) * 18%))
+          calc(40% + (var(--my) * 18%)),
+          rgba(255,255,255,.16),
+          transparent 70%);
+      opacity: .9;
+      pointer-events:none;
+      transform: translateZ(60px);
+      transition: opacity 160ms ease-out;
+    }
+
+    .card:hover{
+      background: linear-gradient(180deg, var(--card2), rgba(255,255,255,.04));
+      border-color: rgba(255,255,255,.22);
+      transform:
+        translateZ(calc(var(--z, 0px) + 18px))
+        translateX(calc(var(--mx) * (var(--xStrength, 10px) * 1.2)))
+        translateY(calc(var(--my) * (var(--yStrength, 10px) * 1.2)));
+    }
+
+    .content{
+      position: relative;
+      padding: 16px 16px 14px;
+      display:flex;
+      flex-direction: column;
+      gap: 10px;
+      transform-style: preserve-3d;
+    }
+
+    .tag{
+      align-self: flex-start;
+      font-size: 12px;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,.78);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.12);
+      transform: translateZ(48px);
+    }
+
+    .title{
+      margin: 0;
+      font-size: 18px;
+      letter-spacing: -0.01em;
+      transform: translateZ(44px);
+    }
+
+    .desc{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.35;
+      font-size: 14px;
+      transform: translateZ(34px);
+    }
+
+    .meta{
+      margin-top: auto;
+      display:flex;
+      align-items:center;
+      justify-content: space-between;
+      gap: 10px;
+      transform: translateZ(26px);
+    }
+
+    .pill{
+      font-size: 12px;
+      color: rgba(255,255,255,.78);
+      padding: 6px 10px;
+      border-radius: 999px;
+      background: rgba(255,255,255,.05);
+      border: 1px solid rgba(255,255,255,.10);
+      white-space: nowrap;
+    }
+
+    .cta{
+      appearance:none;
+      border: 1px solid rgba(255,255,255,.20);
+      background: rgba(255,255,255,.08);
+      color: var(--text);
+      padding: 8px 10px;
+      border-radius: 12px;
+      cursor: pointer;
+      font-weight: 600;
+      font-size: 12px;
+      transition: transform 120ms ease, background 120ms ease, border-color 120ms ease;
+      transform: translateZ(22px);
+    }
+    .cta:hover{
+      background: rgba(255,255,255,.12);
+      border-color: rgba(255,255,255,.28);
+      transform: translateZ(22px) translateY(-1px);
+    }
+
+    /* Depth presets */
+    .z-1 { --z: 20px;  --xStrength: 12px; --yStrength: 10px; }
+    .z-2 { --z: 60px;  --xStrength: 16px; --yStrength: 14px; }
+    .z-3 { --z: 110px; --xStrength: 20px; --yStrength: 18px; }
+
+    /* Responsive */
+    @media (max-width: 980px){
+      .card{ grid-column: span 6; }
+    }
+    @media (max-width: 620px){
+      .stage{ padding: 16px; }
+      .card{ grid-column: span 12; }
+    }
+
+    /* Reduced motion */
+    @media (prefers-reduced-motion: reduce){
+      .world, .card{ transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>3D Parallax Recommendation Gallery</h1>
+    <p>Move your mouse (or tilt finger on touch) to get depth. Cards sit on different Z planes so the scene feels layered.</p>
+  </header>
+
+  <main class="scene" id="scene">
+    <section class="stage" id="stage" aria-label="Recommendation gallery stage">
+      <div class="world" id="world">
+        <div class="layer layer-back" aria-hidden="true">
+          <div class="blob b1"></div>
+          <div class="blob b2"></div>
+          <div class="blob b3"></div>
+        </div>
+        <div class="layer layer-mid" aria-hidden="true">
+          <div class="blob b1" style="transform: translate(120px, 80px) scale(.72); opacity:.85;"></div>
+          <div class="blob b2" style="transform: translate(-160px, 120px) scale(.68); opacity:.75;"></div>
+        </div>
+
+        <div class="grid" id="grid">
+          <!-- Example cards (swap with your data) -->
+          <article class="card z-3">
+            <div class="content">
+              <div class="tag">Top pick</div>
+              <h3 class="title">Hades (Game)</h3>
+              <p class="desc">Fast runs, tight combat, and a “just one more attempt” loop.</p>
+              <div class="meta">
+                <span class="pill">Action • Roguelike</span>
+                <button class="cta" type="button">Details</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card z-2">
+            <div class="content">
+              <div class="tag">Podcast</div>
+              <h3 class="title">Hardcore History</h3>
+              <p class="desc">Long-form storytelling with deep context and a strong narrative arc.</p>
+              <div class="meta">
+                <span class="pill">History • Long-form</span>
+                <button class="cta" type="button">Details</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card z-1">
+            <div class="content">
+              <div class="tag">Book</div>
+              <h3 class="title">Project Hail Mary</h3>
+              <p class="desc">Competence-porn sci-fi with humor, puzzles, and heart.</p>
+              <div class="meta">
+                <span class="pill">Sci-Fi • Standalone</span>
+                <button class="cta" type="button">Details</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card z-1">
+            <div class="content">
+              <div class="tag">Board game</div>
+              <h3 class="title">Azul</h3>
+              <p class="desc">Quick to learn, hard to master, and satisfying tile placement.</p>
+              <div class="meta">
+                <span class="pill">30–45 min</span>
+                <button class="cta" type="button">Details</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card z-2">
+            <div class="content">
+              <div class="tag">Show</div>
+              <h3 class="title">Arcane</h3>
+              <p class="desc">Stylized animation with punchy character arcs and great pacing.</p>
+              <div class="meta">
+                <span class="pill">Animation • Drama</span>
+                <button class="cta" type="button">Details</button>
+              </div>
+            </div>
+          </article>
+
+          <article class="card z-3">
+            <div class="content">
+              <div class="tag">Hidden gem</div>
+              <h3 class="title">Slay the Spire</h3>
+              <p class="desc">Deckbuilding runs where every choice compounds (for better or worse).</p>
+              <div class="meta">
+                <span class="pill">Deckbuilder</span>
+                <button class="cta" type="button">Details</button>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    (() => {
+      const scene = document.getElementById('scene');
+      const stage = document.getElementById('stage');
+      const world = document.getElementById('world');
+
+      const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+
+      function setParallaxFromPoint(clientX, clientY) {
+        const r = stage.getBoundingClientRect();
+        const px = (clientX - r.left) / r.width;   // 0..1
+        const py = (clientY - r.top)  / r.height;  // 0..1
+
+        // normalize to -1..1
+        const mx = clamp((px - 0.5) * 2, -1, 1);
+        const my = clamp((py - 0.5) * 2, -1, 1);
+
+        // rotation angles (tweak to taste)
+        const maxRot = 10; // degrees
+        const rx = (-my * maxRot).toFixed(3) + 'deg';
+        const ry = ( mx * maxRot).toFixed(3) + 'deg';
+
+        // push into CSS variables on the scene container
+        scene.style.setProperty('--rx', rx);
+        scene.style.setProperty('--ry', ry);
+        scene.style.setProperty('--mx', mx.toFixed(4));
+        scene.style.setProperty('--my', my.toFixed(4));
+      }
+
+      // Mouse
+      window.addEventListener('mousemove', (e) => {
+        // Only animate when pointer is over the stage
+        const r = stage.getBoundingClientRect();
+        const inside =
+          e.clientX >= r.left && e.clientX <= r.right &&
+          e.clientY >= r.top  && e.clientY <= r.bottom;
+        if (!inside) return;
+        setParallaxFromPoint(e.clientX, e.clientY);
+      }, { passive: true });
+
+      // Touch (drag)
+      stage.addEventListener('touchstart', (e) => {
+        if (!e.touches[0]) return;
+        setParallaxFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+
+      stage.addEventListener('touchmove', (e) => {
+        if (!e.touches[0]) return;
+        setParallaxFromPoint(e.touches[0].clientX, e.touches[0].clientY);
+      }, { passive: true });
+
+      // Reset on leave
+      stage.addEventListener('mouseleave', () => {
+        scene.style.setProperty('--rx', '0deg');
+        scene.style.setProperty('--ry', '0deg');
+        scene.style.setProperty('--mx', '0');
+        scene.style.setProperty('--my', '0');
+      });
+
+      // Optional: keyboard-friendly "no motion" fallback focus state
+      stage.addEventListener('focusin', () => {
+        scene.style.setProperty('--rx', '0deg');
+        scene.style.setProperty('--ry', '0deg');
+      });
+    })();
+  </script>
+</body>
+</html>

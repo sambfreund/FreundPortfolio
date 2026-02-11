@@ -15,13 +15,6 @@ $(window).on("load", function() {
 
 $(document).ready(function() {
 
- $('#slides').superslides({
- 	animation: 'fade',
- 	play: 5000,
- 	inherit_width_from: $('#hero-carousel'),
- 	inherit_height_from: $('#hero-carousel')
- });
-
 	var typed = new Typed(".typed", {
  		strings: ["Senior Quality Engineer.", "Father.", "Designer.", "Husband.", "Developer.", "Life Long Learner."],
  		typeSpeed: 80,
@@ -50,7 +43,7 @@ $(document).ready(function() {
 			return false;
 	});
 
-		$("#navigation li a").click(function(e) {
+		$("#navigation li a[href^='#']").click(function(e) {
 			e.preventDefault();
 
 			var targetElement = $(this).attr("href");

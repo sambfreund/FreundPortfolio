@@ -21,14 +21,8 @@
 	<!-- JQuery CDN -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
-	<!-- Superslides Link -->
-	<link rel="stylesheet" type="text/css" href="css/superslides.css">
-
 	<!-- Bootstrap CDN -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
-
-	<!-- FancyBox CDN -->
-	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css" />
 
 	<!-- Font Awesome -->
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
@@ -46,34 +40,16 @@
 		<div class="inner"></div>
 	</div>
 
-	<div id="hero-carousel">
-		<div id="slides">
-
-			<div class="overlay"></div>
-
-			<div class="slides-container">
-				<img src="images/slide1.jpg" alt="">
-				<img src="images/slideA.png" alt="">
-				<img src="images/slideB.png" alt="">
-			</div>
-
-			<div class="titleMessage">
-				<div class="heading">
-					<p class="main">SAM FREUND</p>
-					<p class="sub typed"></p>
-				</div>
-			</div>
-
-			<nav class="slides-navigation">
-				<a href="#" class="prev" aria-label="Previous slide"><i class="fas fa-chevron-left"></i></a>
-				<a href="#" class="next" aria-label="Next slide"><i class="fas fa-chevron-right"></i></a>
-			</nav>
-
+	<div id="hero">
+		<div class="hero-content">
+			<p class="hero-name">SAM FREUND</p>
+			<div class="hero-line"></div>
+			<p class="hero-sub typed"></p>
 		</div>
 	</div>
 
 	<nav id="navigation" class="navbar navbar-expand-lg">
-		<a class="navbar-brand" href="#">Welcome</a>
+		<a class="navbar-brand" href="#">SF</a>
 
 		<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
 			aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,16 +62,13 @@
 					<a class="nav-link" href="#about">About <span class="visually-hidden">(current)</span></a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#skills">Skills</a>
+					<a class="nav-link" href="experience.html">Experience</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#experience">Experience</a>
+					<a class="nav-link" href="portfolio.html">Portfolio</a>
 				</li>
 				<li class="nav-item">
-					<a class="nav-link" href="#portfolio">Portfolio</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#blog">Blog</a>
+					<a class="nav-link" href="blog.html">Blog</a>
 				</li>
 				<li class="nav-item">
 					<a class="nav-link" href="#contact">Contact</a>
@@ -107,10 +80,10 @@
 	<div id="about" class="section">
 		<div class="container">
 			<div class="row">
-				<div class="col-md-5">
+				<div class="col-md-3">
 					<img class="aboutImage" src="images/selfie.jpg" alt="Sam Freund" loading="lazy">
 				</div>
-				<div class="col-md-7">
+				<div class="col-md-9">
 					<h4>Who am I?</h4>
 
 					<p>Senior Quality Engineer with 9+ years of experience. I've implemented automation and AI-driven
@@ -131,186 +104,29 @@
 		</div>
 	</div>
 
-	<div id="skills" class="skillsSection section">
+	<div class="section exploreSection">
 		<div class="container">
 			<div class="row">
-				<div class="col-12 text-center section-header">
-					<h2>TECHNICAL SKILLS</h2>
+				<div class="col-md-4">
+					<a href="experience.html" class="page-card">
+						<i class="fas fa-briefcase"></i>
+						<h3>Experience</h3>
+						<p>Skills, work history, and career highlights</p>
+					</a>
 				</div>
-			</div>
-			<div class="row skills-grid">
-				<div class="col-md-4 skill-category">
-					<h4>Testing & QA</h4>
-						<div class="skill-tags">
-						  <span class="skill-tag">API Testing (Postman)</span>
-						  <span class="skill-tag">REST API Testing</span>
-						  <span class="skill-tag">Contract Testing (OpenAPI/Swagger)</span>
-						  <span class="skill-tag">OAuth / SSO Flows (OIDC/SAML basics)</span>
-						  <span class="skill-tag">Test Case Management</span>
-						  <span class="skill-tag">Risk-based Testing / Release Readiness</span>
-						  <span class="skill-tag">Exploratory Testing</span>
-						  <span class="skill-tag">End-to-End Testing</span>
-						  <span class="skill-tag">Blackbox/Whitebox Testing</span>
-						  <span class="skill-tag">Playwright</span>
-						  <span class="skill-tag">Cross-browser Testing</span>
-						  <span class="skill-tag">iOS/Android Testing</span>
-						  <span class="skill-tag">SQL Validation</span>
-						  <span class="skill-tag">Performance Testing</span>
-						  <span class="skill-tag">AI-assisted Testing (Claude/ChatGPT)</span>
-						  <span class="skill-tag">Technical Documentation</span>
-						</div>
+				<div class="col-md-4">
+					<a href="portfolio.html" class="page-card">
+						<i class="fas fa-palette"></i>
+						<h3>Portfolio</h3>
+						<p>Design work, side projects, and experiments</p>
+					</a>
 				</div>
-				<div class="col-md-4 skill-category">
-					<h4>Programming & Test Automation</h4>
-					<div class="skill-tags">
-					  <span class="skill-tag">PHP</span>
-					  <span class="skill-tag">JavaScript</span>
-					  <span class="skill-tag">TypeScript</span>
-					  <span class="skill-tag">Node.js</span>
-					  <span class="skill-tag">Python</span>
-					  <span class="skill-tag">SQL (MySQL / SQL Server)</span>
-					  <span class="skill-tag">HTML/CSS</span>
-					  <span class="skill-tag">Front-end Code Reviews</span>
-					</div>
-				</div>
-				<div class="col-md-4 skill-category">
-					<h4>Process & Tools</h4>
-					<div class="skill-tags">
-					  <span class="skill-tag">Agile</span>
-					  <span class="skill-tag">Scrum</span>
-					  <span class="skill-tag">CI/CD</span>
-					  <span class="skill-tag">GitHub</span>
-					  <span class="skill-tag">GitHub Actions</span>
-					  <span class="skill-tag">Azure DevOps</span>
-					  <span class="skill-tag">Release Management</span>
-					  <span class="skill-tag">Defect Triage & Prioritization</span>
-					  <span class="skill-tag">Wireframing</span>
-					  <span class="skill-tag">UI/UX Design</span>
-					  <span class="skill-tag">Escalation Handling</span>
-					  <span class="skill-tag">Stakeholder Communication</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="experience" class="section experienceSection">
-		<div class="container">
-			<div class="row">
-				<div class="col-12 text-center section-header">
-					<h2>EXPERIENCE</h2>
-				</div>
-			</div>
-			<div class="timeline">
-				<div class="experience-card">
-					<div class="experience-header">
-						<h4>Quality Engineer</h4>
-						<span class="experience-company">Don't Panic Labs</span>
-						<span class="experience-date">Sept 2024 – Present</span>
-					</div>
-					<p class="experience-location">Lincoln, NE · Hybrid</p>
-					<p>Re-implementing quality processes across multiple active projects. Creating automated tests with
-						Playwright for regression testing. Implemented Claude AI to streamline test plan creation and
-						improve cross-department communication. Sole QA Engineer supporting multiple development teams.</p>
-				</div>
-				<div class="experience-card">
-					<div class="experience-header">
-						<h4>Quality Assurance Analyst</h4>
-						<span class="experience-company">Travefy</span>
-						<span class="experience-date">Nov 2019 – Jun 2024</span>
-					</div>
-					<p class="experience-location">Lincoln, NE · Hybrid</p>
-					<p>Managed end-to-end deployments for web and iOS/Android apps. Created and maintained a Playwright
-						test suite. Led onboarding for new QA analysts. Established QA on-call process to support
-						customer success. API testing with internal and external integrations.</p>
-				</div>
-				<div class="experience-card">
-					<div class="experience-header">
-						<h4>Developer / QA</h4>
-						<span class="experience-company">Sycamore Education</span>
-						<span class="experience-date">Feb 2015 – Mar 2019</span>
-					</div>
-					<p class="experience-location">Fremont, NE</p>
-					<p>Full-stack developer building school information systems with PHP, HTML/CSS, MySQL, and
-						JavaScript. Responsible for wireframing and designing large-scale projects. Refined bug tracking
-						processes. Conducted manual testing leveraging development experience.</p>
-				</div>
-				<div class="experience-card">
-					<div class="experience-header">
-						<h4>Co-Owner</h4>
-						<span class="experience-company">All Washed Up Windows</span>
-						<span class="experience-date">May 2008 – Apr 2010</span>
-					</div>
-					<p class="experience-location">Fremont, NE</p>
-					<p>Established and managed a successful small business providing commercial and residential window
-						cleaning services.</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-
-	<div id="stats" class="statsSection section">
-		<div class="container">
-			<div class="stats-row">
-				<div class="stat-item">
-					<span class="stat-number">9+</span>
-					<span class="stat-label">QA Years</span>
-				</div>
-				<div class="stat-item">
-					<span class="stat-number">4</span>
-					<span class="stat-label">Dev Years</span>
-				</div>
-				<div class="stat-item">
-					<span class="stat-number">10+</span>
-					<span class="stat-label">Tech Years</span>
-				</div>
-				<div class="stat-item">
-					<span class="stat-number">1</span>
-					<span class="stat-label">Degree</span>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<div id="blog" class="section blogSection">
-		<div class="container">
-			<div class="row">
-				<div class="col-12 text-center section-header">
-					<h2>BLOG</h2>
-					<p class="subHeading">Thoughts on QA, tech, and life</p>
-				</div>
-			</div>
-			<div class="row blog-posts">
-				<div class="col-md-6 col-lg-4">
-					<article class="blog-card">
-						<div class="blog-card-content">
-							<time class="blog-date">Feb 1, 2019</time>
-							<h3>Daily News</h3>
-							<p>Reflections on the longest months of the year, favorite reads, and the unique experience of Sleeping Giants by Sylvain Neuvel.</p>
-							<a href="blog.html" class="blog-link">Read more <i class="fas fa-arrow-right"></i></a>
-						</div>
-					</article>
-				</div>
-				<div class="col-md-6 col-lg-4">
-					<article class="blog-card">
-						<div class="blog-card-content">
-							<time class="blog-date">Coming soon</time>
-							<h3>More posts on the way</h3>
-							<p>I'm working on new content about QA best practices, automation, and lessons learned from the field. Check back soon!</p>
-							<span class="blog-link disabled">Coming soon</span>
-						</div>
-					</article>
-				</div>
-				<div class="col-md-6 col-lg-4">
-					<article class="blog-card">
-						<div class="blog-card-content">
-							<a href="blog.html" class="blog-view-all">
-								<i class="fas fa-book-open"></i>
-								<span>View all posts</span>
-							</a>
-						</div>
-					</article>
+				<div class="col-md-4">
+					<a href="blog.html" class="page-card">
+						<i class="fas fa-pen-nib"></i>
+						<h3>Blog</h3>
+						<p>Thoughts on QA, tech, and life</p>
+					</a>
 				</div>
 			</div>
 		</div>
@@ -345,200 +161,17 @@
 		</div>
 	</div>
 
-
-	<div id="portfolio" class="section">
-		<div class="container-fluid portfolio-wide">
-			<div class="row">
-				<div class="col-12 text-center section-header">
-					<h2>PORTFOLIO</h2>
-					<p class="subHeading">Design work, side projects, and creative experiments</p>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12 portfolio-filters">
-					<ul id="filters">
-						<li><a href="#" data-filter="*" class="current">All</a></li>
-						<li><a href="#" data-filter=".logo">Logos & Branding</a></li>
-						<li><a href="#" data-filter=".illustration">Illustration</a></li>
-						<li><a href="#" data-filter=".project">Projects</a></li>
-					</ul>
-				</div>
-			</div>
-			<div class="row">
-				<div class="col-12">
-					<ul class="items">
-						<li class="project col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/mutoNWuto.png" alt="Muto-Wuto game" loading="lazy">
-									<a href="mutowuto.html" class="portfolio-card-action">
-										<i class="fas fa-gamepad"></i> Play it
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Muto-Wuto</h4>
-									<p>Indie game project — design & development</p>
-								</div>
-							</div>
-						</li>
-						<li class="project col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image portfolio-card-image-tool">
-									<div class="portfolio-tool-preview">
-										<i class="fas fa-film"></i>
-										<i class="fas fa-book"></i>
-										<i class="fas fa-music"></i>
-									</div>
-									<a href="recommendations.html" class="portfolio-card-action">
-										<i class="fas fa-external-link-alt"></i> Try it
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Media Recommendations</h4>
-									<p>Recommendation tool for movies, books & music — no database</p>
-								</div>
-							</div>
-						</li>
-						<li class="project col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image portfolio-card-image-tool">
-									<div class="portfolio-tool-preview">
-										<i class="fas fa-list-check"></i>
-										<i class="fas fa-arrow-down-wide-short"></i>
-										<i class="fas fa-file-export"></i>
-									</div>
-									<a href="prioritymaker.html" class="portfolio-card-action">
-										<i class="fas fa-external-link-alt"></i> Try it
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Priority Maker</h4>
-									<p>Task prioritization tool with impact, time & complexity ratings — exportable</p>
-								</div>
-							</div>
-						</li>
-						<li class="logo col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/thumbnails/SimpleQ.png" alt="SimpleQ logo" loading="lazy">
-									<a href="images/portfolio/SimpleQ.png" class="portfolio-card-action" data-fancybox data-caption="SimpleQ — Personal project logo">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>SimpleQ</h4>
-									<p>Logo for a personal project</p>
-								</div>
-							</div>
-						</li>
-						<li class="logo col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/thumbnails/longviewTradesmanLogo.png" alt="Longview Tradesman logo" loading="lazy">
-									<a href="images/portfolio/longviewTradesmanLogo.png" class="portfolio-card-action" data-fancybox data-caption="Longview Tradesman — Commission work">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Longview Tradesman</h4>
-									<p>Commissioned logo design</p>
-								</div>
-							</div>
-						</li>
-						<li class="logo col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/thumbnails/touchAboveLogo.png" alt="Touch Above logo" loading="lazy">
-									<a href="images/portfolio/touchAboveLogo.png" class="portfolio-card-action" data-fancybox data-caption="Touch Above — Commissioned logo">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Touch Above</h4>
-									<p>Commissioned logo</p>
-								</div>
-							</div>
-						</li>
-						<li class="logo col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/thumbnails/smalllogo.png" alt="Sam Freund Designs logo" loading="lazy">
-									<a href="images/portfolio/smalllogo.png" class="portfolio-card-action" data-fancybox data-caption="Sam Freund Designs — Personal branding">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Sam Freund Designs</h4>
-									<p>Personal branding logo</p>
-								</div>
-							</div>
-						</li>
-						<li class="logo col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/thumbnails/campaignSign.png" alt="Campaign sign design" loading="lazy">
-									<a href="images/portfolio/campaignSign.png" class="portfolio-card-action" data-fancybox data-caption="Campaign signs for various clients">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Campaign Signs</h4>
-									<p>Election campaign signage design</p>
-								</div>
-							</div>
-						</li>
-						<li class="illustration col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/thumbnails/Bird.png" alt="Bird illustration" loading="lazy">
-									<a href="images/portfolio/Bird.png" class="portfolio-card-action" data-fancybox data-caption="Textured brush illustration experiment">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Bird</h4>
-									<p>Textured brush illustration experiment</p>
-								</div>
-							</div>
-						</li>
-						<li class="illustration col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/thumbnails/cap.jpg" alt="Captain dog illustration" loading="lazy">
-									<a href="images/portfolio/cap.jpg" class="portfolio-card-action" data-fancybox data-caption="Captain — Digital portrait of my parents' dog">
-									<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Captain</h4>
-									<p>Digital portrait of my parents' dog</p>
-								</div>
-							</div>
-						</li>
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
-
 	<div class="copyrightSection">
 		<div class="col-md-12 text-center">
 			<p>&copy; Sam Freund 2025</p>
 		</div>
 	</div>
 
-	<!-- Superslides JS -->
-	<script src="js/jquery.superslides.min.js"></script>
-
 	<!-- Typed JS -->
 	<script src="js/typed.min.js"></script>
 
 	<!-- Bootstrap CDN -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="https://unpkg.com/isotope-layout@3.0.6/dist/isotope.pkgd.min.js"></script>
-
-	<!-- FancyBox CDN -->
-	<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script>
 
 	<script src="js/script.js"></script>
 </body>
