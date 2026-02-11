@@ -247,6 +247,83 @@
 			return w;
 		}
 
+		// Deterministic perfect maze generator for Level 5
+		function level5MazeWalls() {
+			var mazeRows = 14;
+			var mazeCols = 14;
+			var visited = [];
+			for (var rr = 0; rr < mazeRows; rr++) {
+				visited[rr] = [];
+				for (var cc = 0; cc < mazeCols; cc++) visited[rr][cc] = false;
+			}
+
+			var carved = {};
+			function key(r, c) { return r + ',' + c; }
+			function carve(r, c) { carved[key(r, c)] = true; }
+
+			var seed = 1337;
+			function rand() {
+				seed ^= seed << 13;
+				seed ^= seed >> 17;
+				seed ^= seed << 5;
+				return ((seed >>> 0) % 100000) / 100000;
+			}
+
+			function shuffle(arr) {
+				for (var i = arr.length - 1; i > 0; i--) {
+					var j = Math.floor(rand() * (i + 1));
+					var tmp = arr[i];
+					arr[i] = arr[j];
+					arr[j] = tmp;
+				}
+				return arr;
+			}
+
+			var stack = [[0, 0]];
+			visited[0][0] = true;
+			carve(1, 1);
+
+			while (stack.length) {
+				var curr = stack[stack.length - 1];
+				var r0 = curr[0];
+				var c0 = curr[1];
+				var neighbors = [];
+				if (r0 > 0 && !visited[r0 - 1][c0]) neighbors.push([-1, 0]);
+				if (r0 < mazeRows - 1 && !visited[r0 + 1][c0]) neighbors.push([1, 0]);
+				if (c0 > 0 && !visited[r0][c0 - 1]) neighbors.push([0, -1]);
+				if (c0 < mazeCols - 1 && !visited[r0][c0 + 1]) neighbors.push([0, 1]);
+
+				if (!neighbors.length) {
+					stack.pop();
+					continue;
+				}
+
+				shuffle(neighbors);
+				var d = neighbors[0];
+				var r1 = r0 + d[0];
+				var c1 = c0 + d[1];
+
+				var cr = 1 + r0 * 2;
+				var cc = 1 + c0 * 2;
+				var nr = 1 + r1 * 2;
+				var nc = 1 + c1 * 2;
+
+				carve(nr, nc);
+				carve((cr + nr) / 2, (cc + nc) / 2);
+
+				visited[r1][c1] = true;
+				stack.push([r1, c1]);
+			}
+
+			var walls = borders();
+			for (var r = 1; r < ROWS - 1; r++) {
+				for (var c = 1; c < COLS - 1; c++) {
+					if (!carved[key(r, c)]) walls.push([r, c]);
+				}
+			}
+			return walls;
+		}
+
 		var levels = [
 			// LEVEL 1 — Simple corridors, tutorial
 			{
@@ -358,70 +435,12 @@
 			},
 			// LEVEL 5 — Complex maze, tight time
 			{
-				time: 20,
+				time: 45,
 				blueStart: [1, 1],
-				whiteStart: [28, 28],
-				blueGoal: [28, 28],
+				whiteStart: [27, 27],
+				blueGoal: [27, 27],
 				whiteGoal: [1, 1],
-				walls: borders().concat(
-					// Dense maze
-					hWall(3, 1, 5),
-					hWall(3, 8, 14),
-					hWall(3, 18, 22),
-					hWall(3, 25, 28),
-					vWall(6, 1, 3),
-					vWall(6, 6, 9),
-					vWall(15, 1, 3),
-					vWall(15, 6, 8),
-					hWall(6, 8, 12),
-					hWall(6, 16, 20),
-					hWall(6, 23, 28),
-					vWall(10, 3, 5),
-					vWall(10, 9, 14),
-					vWall(20, 3, 5),
-					vWall(20, 9, 14),
-					hWall(9, 1, 4),
-					hWall(9, 7, 9),
-					hWall(9, 13, 19),
-					hWall(9, 22, 28),
-					vWall(24, 1, 5),
-					vWall(24, 9, 14),
-					hWall(12, 2, 6),
-					hWall(12, 11, 14),
-					hWall(12, 18, 23),
-					hWall(12, 25, 28),
-					vWall(5, 13, 17),
-					vWall(14, 13, 17),
-					vWall(24, 15, 20),
-					hWall(15, 1, 4),
-					hWall(15, 7, 13),
-					hWall(15, 17, 23),
-					hWall(15, 25, 28),
-					hWall(18, 2, 8),
-					hWall(18, 11, 16),
-					hWall(18, 19, 24),
-					vWall(9, 16, 20),
-					vWall(17, 16, 20),
-					vWall(25, 19, 24),
-					hWall(21, 1, 5),
-					hWall(21, 8, 14),
-					hWall(21, 18, 22),
-					hWall(21, 25, 28),
-					vWall(6, 22, 27),
-					vWall(14, 22, 27),
-					vWall(22, 22, 27),
-					hWall(24, 1, 5),
-					hWall(24, 8, 13),
-					hWall(24, 16, 21),
-					hWall(24, 24, 28),
-					vWall(3, 25, 28),
-					vWall(10, 25, 28),
-					vWall(19, 25, 27),
-					hWall(27, 2, 5),
-					hWall(27, 7, 12),
-					hWall(27, 15, 19),
-					hWall(27, 22, 27)
-				)
+				walls: level5MazeWalls()
 			}
 		];
 
