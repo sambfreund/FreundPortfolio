@@ -689,6 +689,19 @@ body {
 	transition: transform 0.3s ease;
 }
 
+.portfolio-card-image-logo {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background: linear-gradient(135deg, var(--color-bg) 0%, var(--color-accent-subtle) 100%);
+}
+
+.portfolio-card-image-logo img {
+	width: min(42%, 128px);
+	height: auto;
+	object-fit: contain;
+}
+
 .portfolio-card:hover .portfolio-card-image img {
 	transform: scale(1.04);
 }
