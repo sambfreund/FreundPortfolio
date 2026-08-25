@@ -409,10 +409,6 @@ body {
 	margin-bottom: 24px;
 }
 
-.contact-docs {
-	margin-bottom: 16px;
-}
-
 .contactButton {
 	display: inline-block;
 	padding: 12px 24px;
@@ -430,30 +426,6 @@ body {
 	background: var(--color-accent-hover);
 	text-decoration: none;
 	color: #fff !important;
-}
-
-.contactButton.secondary {
-	background: transparent;
-	color: var(--color-text) !important;
-	border: 2px solid var(--color-border);
-}
-
-.contactButton.secondary:hover {
-	background: var(--color-bg);
-	border-color: var(--color-text-muted);
-	color: var(--color-text) !important;
-}
-
-.contactButton.outlineAccent {
-	background: transparent;
-	color: var(--color-accent) !important;
-	border: 2px solid var(--color-accent);
-}
-
-.contactButton.outlineAccent:hover {
-	background: var(--color-accent-subtle);
-	color: var(--color-accent-hover) !important;
-	border-color: var(--color-accent-hover);
 }
 
 .social-links {
