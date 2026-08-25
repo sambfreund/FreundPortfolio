@@ -238,13 +238,6 @@ body {
 	background: var(--color-bg-alt);
 }
 
-.aboutLogo {
-	display: block;
-	width: 84px;
-	height: auto;
-	margin: 20px auto 0;
-	opacity: 0.9;
-}
 .aboutImage {
 	max-width: 100%;
 	border-radius: var(--radius-lg);
