@@ -1,3 +1,10 @@
+---
+title: Daily News
+date: 2019-02-01
+excerpt: Reflections on the longest months of the year, favorite reads, and the unique experience of Sleeping Giants by Sylvain Neuvel.
+tags: Books, Life, Links
+---
+
 My mom always said February is the longest month of the year. The cold just lingers and by this point, you're more than ready for that cold to be gone. Of course this depends where you're from. For some people it might be 75 and sunny right now! For me, I'd say January is the longest month. You know you have plenty of cold to go, and you've already been in plenty of it. However, on a more optimistic side of things, I think January covers up its dreariness with the excitement of being in a new year. People hit the ground running with all these new ambitions until February sucker punches them right in the face. Maybe mom was right... What's your favorite/least favorite month?
 
 ## Favorite Reading Quotes

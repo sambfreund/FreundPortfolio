@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<!-- Global site tag (gtag.js) - Google Analytics -->
 	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-133573703-1"></script>
 	<script>
 		window.dataLayer = window.dataLayer || [];
@@ -12,16 +11,11 @@
 	</script>
 
 	<title>Blog — Sam Freund</title>
+	<meta name="description" content="Notes from Sam Freund on quality engineering, technology, books, projects, and life.">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 
-	<!-- Bootstrap CDN -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous">
-
-	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
-
-	<!-- Style CSS -->
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 	<link rel="icon" type="image/png" href="/images/icons/sf-logo.png">
 	<link rel="apple-touch-icon" href="/images/icons/sf-logo.png">
@@ -37,48 +31,58 @@
 		</button>
 		<div class="collapse navbar-collapse" id="navbarNav">
 			<ul class="navbar-nav">
-				<li class="nav-item">
-					<a class="nav-link" href="index.html">About</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="experience.html">Experience</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="portfolio.html">Portfolio</a>
-				</li>
-				<li class="nav-item active">
-					<a class="nav-link" href="blog.html">Blog <span class="visually-hidden">(current)</span></a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="index.html#contact">Contact</a>
-				</li>
+				<li class="nav-item"><a class="nav-link" href="index.html">About</a></li>
+				<li class="nav-item"><a class="nav-link" href="experience.html">Experience</a></li>
+				<li class="nav-item"><a class="nav-link" href="portfolio.html">Portfolio</a></li>
+				<li class="nav-item active"><a class="nav-link" href="blog.html">Blog <span class="visually-hidden">(current)</span></a></li>
+				<li class="nav-item"><a class="nav-link" href="index.html#contact">Contact</a></li>
 			</ul>
 		</div>
 	</nav>
 
 	<main class="blog-page">
-		<div class="container">
-			<div class="row">
-				<div class="col-lg-8">
-					<h1 class="blog-index-title">Blog</h1>
-					<div id="blog-list">
-						<p style="color: var(--color-text-muted);">Loading posts...</p>
-					</div>
-				</div>
-				<aside class="col-lg-4">
-					<div class="blog-sidebar">
-						<div class="blog-sidebar-card">
-							<img class="blog-sidebar-image" src="images/samanddogs.jpg" alt="Sam with dogs" loading="lazy">
-							<h3>About Me</h3>
-							<p>Hi, I'm Sam. Nerdy human and dog dad by day and night, and a bunch of other things when the world pauses.</p>
-							<div class="blog-sidebar-socials">
-								<a href="https://x.com/suhham" class="socialLink" aria-label="X" target="_blank" rel="noopener"><i class="fab fa-x-twitter"></i></a>
-								<a href="https://www.instagram.com/suhham" class="socialLink" aria-label="Instagram" target="_blank" rel="noopener"><i class="fab fa-instagram"></i></a>
-							</div>
-						</div>
-					</div>
-				</aside>
+		<header class="blog-hero">
+			<div class="blog-shell">
+				<p class="blog-eyebrow">Notes from Sam</p>
+				<h1>Things worth thinking through.</h1>
+				<p>Writing about quality engineering, useful technology, books, side projects, and the parts of life that resist neat categories.</p>
 			</div>
+		</header>
+
+		<div class="blog-shell blog-layout">
+			<section class="blog-feed" aria-labelledby="latest-posts-title">
+				<div class="blog-feed-heading">
+					<h2 id="latest-posts-title">Latest writing</h2>
+					<p>Newest first</p>
+				</div>
+				<div id="blog-list" class="blog-list" aria-live="polite">
+					<p class="blog-loading">Loading posts…</p>
+				</div>
+			</section>
+
+			<aside class="blog-sidebar" aria-label="About Sam">
+				<section class="blog-about-card">
+					<img class="blog-about-image" src="images/samanddogs.jpg" alt="Sam outdoors with his dogs" loading="lazy">
+					<div class="blog-about-copy">
+						<p class="blog-eyebrow">About me</p>
+						<h2>Hi, I’m Sam.</h2>
+						<p>I’m a senior quality engineer, builder, husband, dad, dog person, reader, gamer, and enthusiastic collector of hobbies.</p>
+						<p>I write here when an idea feels more useful after being thought through in public.</p>
+					</div>
+					<nav class="blog-social-links" aria-label="Sam’s social profiles">
+						<a href="https://github.com/sambfreund" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-github" aria-hidden="true"></i><span>GitHub</span></a>
+						<a href="https://www.linkedin.com/in/sam-freund/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-linkedin-in" aria-hidden="true"></i><span>LinkedIn</span></a>
+						<a href="https://x.com/suhham" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-x-twitter" aria-hidden="true"></i><span>X</span></a>
+						<a href="https://www.instagram.com/suhham/" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-instagram" aria-hidden="true"></i><span>Instagram</span></a>
+						<a href="https://www.goodreads.com/user/show/33284768-sam" target="_blank" rel="noopener noreferrer"><i class="fa-brands fa-goodreads-g" aria-hidden="true"></i><span>Goodreads</span></a>
+					</nav>
+				</section>
+
+				<section class="blog-topics-card">
+					<p class="blog-eyebrow">Recurring themes</p>
+					<p>Quality · Technology · Books · Projects · Life</p>
+				</section>
+			</aside>
 		</div>
 	</main>
 
@@ -87,43 +91,6 @@
 	</footer>
 
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-	<script>
-		(function() {
-			var fallbackPosts = [
-				{ slug: "welcome", title: "Welcome to the Blog", date: "2025-02-10", excerpt: "A fresh start for the blog. Expect posts about tech, quality engineering, books, and whatever else crosses my mind." },
-				{ slug: "daily-news", title: "Daily News", date: "2019-02-01", excerpt: "Reflections on the longest months of the year, favorite reads, and the unique experience of Sleeping Giants by Sylvain Neuvel." }
-			];
-
-			function renderPosts(posts) {
-				posts.sort(function(a, b) {
-					return new Date(b.date) - new Date(a.date);
-				});
-
-				var container = document.getElementById('blog-list');
-				if (posts.length === 0) {
-					container.innerHTML = '<p style="color: var(--color-text-muted);">No posts yet. Check back soon!</p>';
-					return;
-				}
-
-				var html = '';
-				posts.forEach(function(post) {
-					var date = new Date(post.date + 'T00:00:00');
-					var formatted = date.toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
-					html += '<a href="blog-post.html?post=' + post.slug + '" class="blog-index-card">';
-					html += '<time class="blog-date">' + formatted + '</time>';
-					html += '<h2>' + post.title + '</h2>';
-					html += '<p>' + post.excerpt + '</p>';
-					html += '<span class="blog-link">Read more <i class="fas fa-arrow-right"></i></span>';
-					html += '</a>';
-				});
-				container.innerHTML = html;
-			}
-
-			fetch('posts/posts.json')
-				.then(function(r) { return r.json(); })
-				.then(renderPosts)
-				.catch(function() { renderPosts(fallbackPosts); });
-		})();
-	</script>
+	<script src="js/blog-index.js"></script>
 </body>
 </html>
