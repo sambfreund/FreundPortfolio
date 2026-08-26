@@ -25,10 +25,6 @@
 	<!-- FancyBox CDN -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.css" />
 
-	<!-- Font Awesome -->
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
-		crossorigin="anonymous" referrerpolicy="no-referrer" />
-
 	<!-- Style CSS -->
 	<link rel="stylesheet" type="text/css" href="css/style.css">
 
@@ -69,280 +65,198 @@
 		</div>
 	</nav>
 
-	<div id="portfolio" class="section">
-		<div class="container-fluid portfolio-wide">
-			<div class="row">
-				<div class="col-12 text-center section-header">
-					<h2>PORTFOLIO</h2>
-					<p class="subHeading">Design work, side projects, and creative experiments</p>
+	<main id="portfolio" class="portfolio-page">
+		<div class="portfolio-shell">
+			<header class="portfolio-intro">
+				<p class="portfolio-eyebrow">Selected work</p>
+				<h1>Useful things I’ve built</h1>
+				<p>Practical tools, playful experiments, and small systems designed to make complicated things easier.</p>
+			</header>
+
+			<section class="featured-project" aria-labelledby="featured-project-title">
+				<a class="featured-project-link" href="qa-cheatsheet.html">
+					<div class="featured-project-copy">
+						<p class="project-kicker">Featured · Quality engineering</p>
+						<h2 id="featured-project-title">QA Engineer Cheatsheet</h2>
+						<p>A 17-section field guide with seven interactive generators, practical Playwright guidance, and copy-ready references for the work quality engineers do every day.</p>
+						<p class="project-meta">Interactive reference · No account · Built for working QEs</p>
+						<span class="project-action">Explore the toolkit <span aria-hidden="true">→</span></span>
+					</div>
+					<div class="featured-project-preview">
+						<img src="images/portfolio/previews/qa-cheatsheet.png" alt="QA Engineer Cheatsheet showing its section navigation and testing strategy guide" fetchpriority="high">
+					</div>
+				</a>
+			</section>
+
+			<section class="project-section" aria-labelledby="more-projects-title">
+				<div class="portfolio-section-heading">
+					<p class="portfolio-eyebrow">More projects</p>
+					<h2 id="more-projects-title">Tools and experiments</h2>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-12 portfolio-filters">
-					<ul id="filters">
-						<li><a href="#" data-filter="*" class="current">All</a></li>
-						<li><a href="#" data-filter=".logo">Logos & Branding</a></li>
-						<li><a href="#" data-filter=".illustration">Illustration</a></li>
-						<li><a href="#" data-filter=".project">Projects</a></li>
-					</ul>
+
+				<div class="project-grid">
+					<article class="project-card" style="--project-surface: #d8c7b9;">
+						<a class="project-card-link" href="https://seedtheday.app" target="_blank" rel="noopener noreferrer">
+							<div class="project-preview">
+								<img src="images/portfolio/previews/seed-the-day.png" alt="Seed the Day habit app homepage" loading="lazy">
+							</div>
+							<div class="project-card-copy">
+								<p class="project-kicker">Live web app · Habit building</p>
+								<h3>Seed the Day</h3>
+								<p>A habit app that starts small and unlocks more room to grow as consistency builds.</p>
+								<span class="project-action">Visit the live app <span aria-hidden="true">↗</span></span>
+							</div>
+						</a>
+					</article>
+
+					<article class="project-card" style="--project-surface: #d5ad27;">
+						<a class="project-card-link" href="life_fitness_tracker.html">
+							<div class="project-preview">
+								<img src="images/portfolio/previews/fitness-tracker.png" alt="Life Fitness Tracker daily workout and nutrition dashboard" loading="lazy">
+							</div>
+							<div class="project-card-copy">
+								<p class="project-kicker">Personal system · Local-first</p>
+								<h3>Life Fitness Tracker</h3>
+								<p>An adaptive training and nutrition system that asks for only two honest answers per day.</p>
+								<span class="project-action">Try the tracker <span aria-hidden="true">→</span></span>
+							</div>
+						</a>
+					</article>
+
+					<article class="project-card" style="--project-surface: #b9a55d;">
+						<a class="project-card-link" href="prioritymaker.html">
+							<div class="project-preview">
+								<img src="images/portfolio/previews/priority-maker.png" alt="Priority Maker task scoring interface" loading="lazy">
+							</div>
+							<div class="project-card-copy">
+								<p class="project-kicker">Decision tool · Exportable</p>
+								<h3>Priority Maker</h3>
+								<p>Scores tasks by impact, time, and complexity to turn a crowded list into a defensible order.</p>
+								<span class="project-action">Prioritize a list <span aria-hidden="true">→</span></span>
+							</div>
+						</a>
+					</article>
+
+					<article class="project-card" style="--project-surface: #c8b06c;">
+						<a class="project-card-link" href="where-to-eat.html">
+							<div class="project-preview">
+								<img src="images/portfolio/previews/where-to-eat.png" alt="Where Should We Eat group ranking interface" loading="lazy">
+							</div>
+							<div class="project-card-copy">
+								<p class="project-kicker">Group utility · Ranked choice</p>
+								<h3>Where Should We Eat?</h3>
+								<p>Combines everyone’s restaurant rankings into one transparent group decision.</p>
+								<span class="project-action">Make a decision <span aria-hidden="true">→</span></span>
+							</div>
+						</a>
+					</article>
+
+					<article class="project-card" style="--project-surface: #aebac4;">
+						<a class="project-card-link" href="recommendations.html">
+							<div class="project-preview">
+								<img src="images/portfolio/previews/recommendations.png" alt="Recommendations tool showing a collection of favorite books" loading="lazy">
+							</div>
+							<div class="project-card-copy">
+								<p class="project-kicker">Curated collection · No database</p>
+								<h3>Recommendations</h3>
+								<p>A browsable collection of favorite books, movies, games, recipes, and songs that creates a shareable shortlist.</p>
+								<span class="project-action">Browse favorites <span aria-hidden="true">→</span></span>
+							</div>
+						</a>
+					</article>
+
+					<article class="project-card" style="--project-surface: #87927a;">
+						<a class="project-card-link" href="meaning-adventure.html">
+							<div class="project-preview">
+								<img src="images/portfolio/previews/contribution-quest.png" alt="Contribution Quest story scene with three choices" loading="lazy">
+							</div>
+							<div class="project-card-copy">
+								<p class="project-kicker">Interactive story · Self-reflection</p>
+								<h3>Contribution Quest</h3>
+								<p>A six-scene jungle adventure whose choices reveal how you naturally help people and contribute.</p>
+								<span class="project-action">Begin the story <span aria-hidden="true">→</span></span>
+							</div>
+						</a>
+					</article>
+
+					<article class="project-card" style="--project-surface: #34364b;">
+						<a class="project-card-link" href="mutowuto.html">
+							<div class="project-preview">
+								<img src="images/portfolio/previews/muto-wuto.png" alt="Muto and Wuto dual movement maze game" loading="lazy">
+							</div>
+							<div class="project-card-copy">
+								<p class="project-kicker">Browser game · Five levels</p>
+								<h3>Muto &amp; Wuto</h3>
+								<p>A compact maze game that asks one player to guide two characters with different controls.</p>
+								<span class="project-action">Play the game <span aria-hidden="true">→</span></span>
+							</div>
+						</a>
+					</article>
 				</div>
-			</div>
-			<div class="row">
-				<div class="col-12">
-					<ul class="items">
-						<li class="project col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image portfolio-card-image-tool">
-									<div class="portfolio-tool-preview">
-										<i class="fas fa-flask-vial"></i>
-										<i class="fas fa-bug-slash"></i>
-										<i class="fas fa-robot"></i>
-									</div>
-									<a href="qa-cheatsheet.html" class="portfolio-card-action">
-										<i class="fas fa-external-link-alt"></i> Open it
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>QA Engineer Cheatsheet</h4>
-									<p>Interactive QA toolkit — Playwright best practices, test design generators, and a full reference</p>
-								</div>
-							</div>
-						</li>
-						<li class="project col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image portfolio-card-image-logo">
-									<img src="images/portfolio/seedtheday-logo.png" alt="Seed the Day logo" loading="lazy">
-									<a href="https://seedtheday.app" class="portfolio-card-action" target="_blank" rel="noopener noreferrer">
-										<i class="fas fa-external-link-alt"></i> Visit app
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Seed the Day</h4>
-									<p>Live web app available at seedtheday.app</p>
-								</div>
-							</div>
-						</li>
-						<li class="project col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/mutoNWuto.png" alt="Muto & Wuto game" loading="lazy">
-									<a href="mutowuto.html" class="portfolio-card-action">
-										<i class="fas fa-gamepad"></i> Play it
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Muto & Wuto</h4>
-									<p>Indie game project — design & development</p>
-								</div>
-							</div>
-						</li>
-						<li class="project col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image portfolio-card-image-tool">
-									<div class="portfolio-tool-preview">
-										<i class="fas fa-film"></i>
-										<i class="fas fa-book"></i>
-										<i class="fas fa-music"></i>
-									</div>
-									<a href="recommendations.html" class="portfolio-card-action">
-										<i class="fas fa-external-link-alt"></i> Try it
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Recommendations</h4>
-									<p>Recommendation tool for movies, books & music — no database</p>
-								</div>
-							</div>
-						</li>
-						<li class="project col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image portfolio-card-image-tool">
-									<div class="portfolio-tool-preview">
-										<i class="fas fa-book-open"></i>
-										<i class="fas fa-compass"></i>
-										<i class="fas fa-seedling"></i>
-									</div>
-									<a href="meaning-adventure.html" class="portfolio-card-action">
-										<i class="fas fa-external-link-alt"></i> Play it
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Contribution Quest</h4>
-									<p>Text adventure that helps you discover how you want to contribute to the world</p>
-								</div>
-							</div>
-						</li>
-						<li class="project col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image portfolio-card-image-tool">
-									<div class="portfolio-tool-preview">
-										<i class="fas fa-utensils"></i>
-										<i class="fas fa-users"></i>
-										<i class="fas fa-ranking-star"></i>
-									</div>
-									<a href="where-to-eat.html" class="portfolio-card-action">
-										<i class="fas fa-external-link-alt"></i> Try it
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Where Should We Eat?</h4>
-									<p>Group ranking tool for restaurant decisions with combined scoring</p>
-								</div>
-							</div>
-						</li>
-						<li class="project col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image portfolio-card-image-tool">
-									<div class="portfolio-tool-preview">
-										<i class="fas fa-list-check"></i>
-										<i class="fas fa-arrow-down-wide-short"></i>
-										<i class="fas fa-file-export"></i>
-									</div>
-									<a href="prioritymaker.html" class="portfolio-card-action">
-										<i class="fas fa-external-link-alt"></i> Try it
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Priority Maker</h4>
-									<p>Task prioritization tool with impact, time & complexity ratings — exportable</p>
-								</div>
-							</div>
-						</li>
-						<li class="project col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image portfolio-card-image-tool">
-									<div class="portfolio-tool-preview">
-										<i class="fas fa-circle-check"></i>
-										<i class="fas fa-dumbbell"></i>
-										<i class="fas fa-bowl-food"></i>
-									</div>
-									<a href="life_fitness_tracker.html" class="portfolio-card-action">
-										<i class="fas fa-external-link-alt"></i> Try it
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Life Fitness Tracker</h4>
-									<p>Adaptive workout queue + nutrition targets — two yes/no answers a day, no logging spiral</p>
-								</div>
-							</div>
-						</li>
-						<li class="logo col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image portfolio-card-image-logo">
-									<img src="images/sf-logo.png" alt="SF monogram" loading="lazy">
-									<a href="images/portfolio/sf-logo.png" class="portfolio-card-action" data-fancybox data-caption="SF Monogram — Current personal brand mark">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>SF Monogram</h4>
-									<p>Current personal brand mark — interlocking S and F with a gold counter-stroke</p>
-								</div>
-							</div>
-						</li>
-						<li class="logo col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/SimpleQ.png" alt="SimpleQ logo" loading="lazy">
-									<a href="images/portfolio/SimpleQ.png" class="portfolio-card-action" data-fancybox data-caption="SimpleQ — Personal project logo">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>SimpleQ</h4>
-									<p>Logo for a personal project</p>
-								</div>
-							</div>
-						</li>
-						<li class="logo col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/longviewTradesmanLogo.png" alt="Longview Tradesman logo" loading="lazy">
-									<a href="images/portfolio/longviewTradesmanLogo.png" class="portfolio-card-action" data-fancybox data-caption="Longview Tradesman — Commission work">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Longview Tradesman</h4>
-									<p>Commissioned logo design</p>
-								</div>
-							</div>
-						</li>
-						<li class="logo col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/touchAboveLogo.png" alt="Touch Above logo" loading="lazy">
-									<a href="images/portfolio/touchAboveLogo.png" class="portfolio-card-action" data-fancybox data-caption="Touch Above — Commissioned logo">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Touch Above</h4>
-									<p>Commissioned logo</p>
-								</div>
-							</div>
-						</li>
-						<li class="logo col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/smalllogo.png" alt="Sam Freund Designs logo" loading="lazy">
-									<a href="images/portfolio/smalllogo.png" class="portfolio-card-action" data-fancybox data-caption="Sam Freund Designs — Personal branding">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Sam Freund Designs</h4>
-									<p>Personal branding logo</p>
-								</div>
-							</div>
-						</li>
-						<li class="logo col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/campaignSign.png" alt="Campaign sign design" loading="lazy">
-									<a href="images/portfolio/campaignSign.png" class="portfolio-card-action" data-fancybox data-caption="Campaign signs for various clients">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Campaign Signs</h4>
-									<p>Election campaign signage design</p>
-								</div>
-							</div>
-						</li>
-						<li class="illustration col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/Bird.png" alt="Bird illustration" loading="lazy">
-									<a href="images/portfolio/Bird.png" class="portfolio-card-action" data-fancybox data-caption="Textured brush illustration experiment">
-										<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Bird</h4>
-									<p>Textured brush illustration experiment</p>
-								</div>
-							</div>
-						</li>
-						<li class="illustration col-6 col-lg-4">
-							<div class="portfolio-card">
-								<div class="portfolio-card-image">
-									<img src="images/portfolio/cap.jpg" alt="Captain dog illustration" loading="lazy">
-									<a href="images/portfolio/cap.jpg" class="portfolio-card-action" data-fancybox data-caption="Captain — Digital portrait of my parents' dog">
-									<i class="fas fa-search-plus"></i> View
-									</a>
-								</div>
-								<div class="portfolio-card-body">
-									<h4>Captain</h4>
-									<p>Digital portrait of my parents' dog</p>
-								</div>
-							</div>
-						</li>
-					</ul>
+			</section>
+
+			<section class="portfolio-archive" aria-labelledby="archive-title">
+				<div class="archive-heading">
+					<div>
+						<p class="portfolio-eyebrow">Earlier work</p>
+						<h2 id="archive-title">Identity &amp; illustration</h2>
+					</div>
+					<p>An abbreviated archive of older visual work.</p>
 				</div>
-			</div>
+
+				<div class="archive-grid">
+					<figure class="archive-item">
+						<a href="images/portfolio/sf-logo.png" data-fancybox="archive" data-caption="SF Monogram">
+							<img src="images/sf-logo.png" alt="SF monogram" loading="lazy">
+						</a>
+						<figcaption>SF Monogram</figcaption>
+					</figure>
+					<figure class="archive-item">
+						<a href="images/portfolio/SimpleQ.png" data-fancybox="archive" data-caption="SimpleQ">
+							<img src="images/portfolio/SimpleQ.png" alt="SimpleQ logo" loading="lazy">
+						</a>
+						<figcaption>SimpleQ</figcaption>
+					</figure>
+					<figure class="archive-item">
+						<a href="images/portfolio/longviewTradesmanLogo.png" data-fancybox="archive" data-caption="Longview Tradesman">
+							<img src="images/portfolio/longviewTradesmanLogo.png" alt="Longview Tradesman logo" loading="lazy">
+						</a>
+						<figcaption>Longview Tradesman</figcaption>
+					</figure>
+					<figure class="archive-item">
+						<a href="images/portfolio/touchAboveLogo.png" data-fancybox="archive" data-caption="Touch Above">
+							<img src="images/portfolio/touchAboveLogo.png" alt="Touch Above logo" loading="lazy">
+						</a>
+						<figcaption>Touch Above</figcaption>
+					</figure>
+					<figure class="archive-item">
+						<a href="images/portfolio/smalllogo.png" data-fancybox="archive" data-caption="Sam Freund Designs">
+							<img src="images/portfolio/smalllogo.png" alt="Sam Freund Designs logo" loading="lazy">
+						</a>
+						<figcaption>Sam Freund Designs</figcaption>
+					</figure>
+					<figure class="archive-item">
+						<a href="images/portfolio/campaignSign.png" data-fancybox="archive" data-caption="Campaign Signs">
+							<img src="images/portfolio/campaignSign.png" alt="Campaign sign design" loading="lazy">
+						</a>
+						<figcaption>Campaign Signs</figcaption>
+					</figure>
+					<figure class="archive-item archive-item-art">
+						<a href="images/portfolio/Bird.png" data-fancybox="archive" data-caption="Bird">
+							<img src="images/portfolio/Bird.png" alt="Bird illustration" loading="lazy">
+						</a>
+						<figcaption>Bird</figcaption>
+					</figure>
+					<figure class="archive-item archive-item-art">
+						<a href="images/portfolio/cap.jpg" data-fancybox="archive" data-caption="Captain">
+							<img src="images/portfolio/cap.jpg" alt="Captain dog illustration" loading="lazy">
+						</a>
+						<figcaption>Captain</figcaption>
+					</figure>
+				</div>
+			</section>
 		</div>
-	</div>
+	</main>
 
 	<div class="copyrightSection">
 		<div class="col-md-12 text-center">
@@ -355,8 +269,6 @@
 
 	<!-- Bootstrap CDN -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
-	<script type="text/javascript" src="https://unpkg.com/isotope-layout@3.0.6/dist/isotope.pkgd.min.js"></script>
-
 	<!-- FancyBox CDN -->
 	<script src="https://cdn.jsdelivr.net/gh/fancyapps/fancybox@3.5.6/dist/jquery.fancybox.min.js"></script>
 

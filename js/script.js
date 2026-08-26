@@ -3,16 +3,6 @@ $(window).on("load", function() {
 			$(".loader").fadeOut(750);
 		});
 
-	if ($.fn.isotope && $(".items").length) {
-		$(".items").isotope({
-			filter:'*',
-			animationOptions: {
-				duration: 1500,
-				easing: 'linear',
-				queue: false
-			}
-		});
-	}
 });
 
 $(document).ready(function() {
@@ -110,28 +100,6 @@ $(document).ready(function() {
 		$("[data-fancybox]").fancybox();
 	}
 
-	$("#filters a").click(function() {
-		if (!$.fn.isotope || !$(".items").length) {
-			return false;
-		}
-
-			$("#filters .current").removeClass("current");
-			$(this).addClass("current");
-
-			var selector = $(this).attr("data-filter");
-
-			$(".items").isotope({
-			filter: selector,
-			animationOptions: {
-				duration: 1500,
-				easing: 'linear',
-				queue: false
-			}
-		});
-
-			return false;
-	});
-
 	$("#navigation li a[href^='#']").click(function(e) {
 			e.preventDefault();
 
@@ -140,57 +108,6 @@ $(document).ready(function() {
 			var targetPostion = $(targetElement).offset().top;
 			$("html, body").animate({ scrollTop: targetPostion - 80 }, "slow");
 		});
-
-		// Portfolio reveal + subtle tilt motion
-		var cardItems = document.querySelectorAll(".items li");
-		if (cardItems.length) {
-			document.body.classList.add("portfolio-motion");
-
-			cardItems.forEach(function(item, index) {
-				var delay = (index % 3) * 70;
-				item.style.setProperty("--reveal-delay", delay + "ms");
-			});
-
-			if ("IntersectionObserver" in window) {
-				var revealObserver = new IntersectionObserver(function(entries, observer) {
-					entries.forEach(function(entry) {
-						if (!entry.isIntersecting) return;
-						entry.target.classList.add("card-visible");
-						observer.unobserve(entry.target);
-					});
-				}, { threshold: 0.15, rootMargin: "0px 0px -30px 0px" });
-
-				cardItems.forEach(function(item) {
-					revealObserver.observe(item);
-				});
-			} else {
-				cardItems.forEach(function(item) {
-					item.classList.add("card-visible");
-				});
-			}
-
-			var canTilt = window.matchMedia("(hover: hover) and (pointer: fine)").matches
-				&& !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-
-			if (canTilt) {
-				document.querySelectorAll(".portfolio-card").forEach(function(card) {
-					card.addEventListener("mousemove", function(e) {
-						var rect = card.getBoundingClientRect();
-						var x = (e.clientX - rect.left) / rect.width;
-						var y = (e.clientY - rect.top) / rect.height;
-						var rotateY = (x - 0.5) * 6;
-						var rotateX = (0.5 - y) * 6;
-						card.style.setProperty("--tilt-x", rotateX.toFixed(2) + "deg");
-						card.style.setProperty("--tilt-y", rotateY.toFixed(2) + "deg");
-					});
-
-					card.addEventListener("mouseleave", function() {
-						card.style.setProperty("--tilt-x", "0deg");
-						card.style.setProperty("--tilt-y", "0deg");
-					});
-				});
-			}
-		}
 
 		const nav = $("#navigation");
 		const navTop = nav.offset().top;
