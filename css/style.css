@@ -943,6 +943,24 @@ body {
 	top: 0;
 	left: 0;
 	z-index: 1000;
+	transition: opacity 500ms ease, visibility 0s linear 500ms;
+	/* Failsafe: the overlay clears itself even if no script ever runs, so a
+	   blocked CDN or disabled JS can never leave the page stuck behind it. */
+	animation: loaderFailsafe 500ms ease 4s forwards;
+}
+
+.loader.is-hidden {
+	opacity: 0;
+	visibility: hidden;
+	pointer-events: none;
+}
+
+@keyframes loaderFailsafe {
+	to {
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+	}
 }
 
 .loader .inner {

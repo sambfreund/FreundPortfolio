@@ -61,6 +61,19 @@
 		</div>
 	</div>
 
+	<script>
+		// Clear the loading overlay as soon as the page is ready, with no jQuery
+		// dependency. style.css carries a CSS failsafe for the case where no
+		// script runs at all, so the overlay can never strand the page.
+		(function () {
+			var loader = document.querySelector(".loader");
+			if (!loader) return;
+			var hide = function () { loader.classList.add("is-hidden"); };
+			window.addEventListener("load", hide);
+			setTimeout(hide, 3000);
+		})();
+	</script>
+
 	<div id="hero">
 		<div class="hero-ambient" aria-hidden="true"></div>
 		<div class="hero-content">
