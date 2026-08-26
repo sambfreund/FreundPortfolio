@@ -16,6 +16,11 @@ $(document).ready(function() {
 		"Writer."
 	];
 
+	// The CSS honours prefers-reduced-motion, but these two animations are
+	// script-driven and have to opt out here as well.
+	var reduceMotion = window.matchMedia &&
+		window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
 	function initHeroAmbient(words) {
 		var ambient = document.querySelector(".hero-ambient");
 		if (!ambient || !words || !words.length) return;
@@ -72,6 +77,10 @@ $(document).ready(function() {
 		}
 
 		nextHighlight(true);
+
+		// Reduced motion: leave a single static highlight rather than cycling.
+		if (reduceMotion) return;
+
 		setInterval(function() {
 			nextHighlight(false);
 		}, 2400);
@@ -79,14 +88,21 @@ $(document).ready(function() {
 
 	initHeroAmbient(heroTraits);
 
-	if (typeof Typed !== 'undefined' && document.querySelector(".typed")) {
-		var typed = new Typed(".typed", {
-			strings: heroTraits,
-			typeSpeed: 80,
-			loop: true,
-			startDelay: 1000,
-			showCursor: false
-		});
+	var typedTarget = document.querySelector(".typed");
+
+	if (typedTarget) {
+		if (reduceMotion) {
+			// Reduced motion: no looping typewriter, just show one trait.
+			typedTarget.textContent = heroTraits[0];
+		} else if (typeof Typed !== 'undefined') {
+			new Typed(".typed", {
+				strings: heroTraits,
+				typeSpeed: 80,
+				loop: true,
+				startDelay: 1000,
+				showCursor: false
+			});
+		}
 	}
 
 	if ($.fn.fancybox && $("[data-fancybox]").length) {
