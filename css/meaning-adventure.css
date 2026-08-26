@@ -123,3 +123,143 @@
 		padding-top: 95px;
 	}
 }
+
+/* --- progress ---------------------------------------------------------- */
+
+.mq-progress {
+	display: flex;
+	align-items: center;
+	gap: 12px;
+}
+
+.mq-progress-track {
+	flex: 1;
+	height: 4px;
+	background: var(--color-border);
+	border-radius: 999px;
+	overflow: hidden;
+}
+
+.mq-progress-fill {
+	display: block;
+	height: 100%;
+	width: 0;
+	background: var(--color-accent);
+	transition: width 350ms ease;
+}
+
+/* --- continuity between scenes ----------------------------------------- */
+
+.mq-echo {
+	border-left: 3px solid var(--color-accent);
+	padding: 6px 0 6px 12px;
+	margin-bottom: 14px;
+	color: var(--color-text-muted);
+	font-style: italic;
+}
+
+.mq-card h2:focus {
+	outline: none;
+}
+
+.mq-card h2:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 3px;
+}
+
+.mq-choice:focus-visible {
+	outline: 2px solid var(--color-accent);
+	outline-offset: 2px;
+}
+
+/* --- result: trait spectrum -------------------------------------------- */
+
+.mq-bars {
+	display: grid;
+	gap: 8px;
+	margin-bottom: 12px;
+}
+
+.mq-bar-row {
+	display: grid;
+	grid-template-columns: 8.5rem 1fr 4.5rem;
+	align-items: center;
+	gap: 10px;
+}
+
+.mq-bar-label {
+	font-weight: 600;
+	font-size: 0.9rem;
+}
+
+.mq-bar-track {
+	height: 10px;
+	background: var(--color-border);
+	border-radius: 999px;
+	overflow: hidden;
+}
+
+.mq-bar-fill {
+	display: block;
+	height: 100%;
+	background: var(--color-accent);
+	border-radius: 999px;
+	transition: width 500ms ease;
+}
+
+.mq-bar-count {
+	font-size: 0.85rem;
+	color: var(--color-text-muted);
+	text-align: right;
+	font-variant-numeric: tabular-nums;
+}
+
+.mq-scoring-note {
+	font-size: 0.85rem;
+	color: var(--color-text-muted);
+	margin-bottom: 16px;
+}
+
+/* --- result: recap ------------------------------------------------------ */
+
+.mq-recap {
+	margin: 14px 0 16px;
+}
+
+.mq-recap summary {
+	cursor: pointer;
+	font-weight: 600;
+}
+
+.mq-journey {
+	margin: 10px 0 0 18px;
+	color: var(--color-text-muted);
+	font-size: 0.92rem;
+}
+
+.mq-journey li {
+	margin-bottom: 6px;
+}
+
+.mq-journey strong {
+	color: var(--color-text);
+}
+
+.mq-result hr {
+	margin: 18px 0;
+	border-color: var(--color-border);
+}
+
+@media (max-width: 560px) {
+	.mq-bar-row {
+		grid-template-columns: 7rem 1fr 3.8rem;
+		gap: 8px;
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.mq-progress-fill,
+	.mq-bar-fill {
+		transition: none;
+	}
+}

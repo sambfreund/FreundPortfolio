@@ -4,6 +4,7 @@
 	<meta charset="UTF-8">
 	<title>Contribution Quest - Sam Freund</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="description" content="A ten-scene jungle story whose choices reveal how you naturally help people — with the scoring shown openly instead of hidden behind a percentage.">
 
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" integrity="sha384-t1nt8BQoYMLFN5p42tRAtuAAFQaCQODekUVeKKZrEnEyp4H2R0RHFz0KWpmj7i8g" />
@@ -46,24 +47,38 @@
 		<div class="container mq-wrap">
 			<div class="mq-header">
 				<h1>CONTRIBUTION QUEST</h1>
-				<p>A story adventure about surviving a fierce jungle by helping the animals who become your allies.</p>
-				<p class="mq-sub">You can understand and speak with the animals, and your choices reveal how you naturally contribute while finding your way home.</p>
+				<p>A story about surviving a fierce jungle by helping the animals who become your allies.</p>
+				<p class="mq-sub">You can understand and speak with the animals. Ten choices, no right answers &mdash; what you do under pressure is what the jungle remembers.</p>
 			</div>
 
-			<div class="mq-card">
-				<div class="mq-progress"><span id="mq-progress-text">Scene 1 of 6</span></div>
-				<h2 id="mq-scene-title">A child wakes up in a fierce jungle</h2>
-				<p id="mq-scene-text">
-					The storm is loud, the jungle is huge, and home is nowhere in sight. Choose the first step.
-				</p>
+			<div class="mq-card" id="mq-stage" aria-live="polite">
+				<div class="mq-progress">
+					<span id="mq-progress-text">Scene 1 of 10</span>
+					<span class="mq-progress-track" aria-hidden="true"><span class="mq-progress-fill" id="mq-progress-fill"></span></span>
+				</div>
+				<p class="mq-echo" id="mq-echo" hidden></p>
+				<h2 id="mq-scene-title" tabindex="-1">Lost at Dawn</h2>
+				<p id="mq-scene-text"></p>
 				<div id="mq-choices" class="mq-choices"></div>
 				<div id="mq-result" class="mq-result" hidden></div>
 			</div>
 
 			<div class="mq-card mq-sources">
 				<details>
-					<summary>Why these choices work</summary>
-					<p>This story uses recurring themes from psychology and meaning research.</p>
+					<summary>How the scoring works</summary>
+					<p>No hidden weighting. There are ten scenes and five ways of helping. Each scene offers exactly
+						three of the five, and across the whole story <strong>every way of helping is offered exactly
+						six times</strong> &mdash; so no path is easier to land on than another.</p>
+					<p>Each choice adds one point to one trait. Your result is simply the count: if you are told you
+						chose care four times, you chose it four of the six times it was on the table. The story is
+						a mirror, not a test, and it is not measuring anything about you that you did not just decide.</p>
+				</details>
+			</div>
+
+			<div class="mq-card mq-sources">
+				<details>
+					<summary>Why these five ways of helping</summary>
+					<p>The five traits come from recurring themes in psychology and meaning research.</p>
 					<ul>
 						<li><a href="https://www.goodreads.com/quotes/10187202-we-can-discover-this-meaning-in-life-in-three-different" target="_blank" rel="noopener">Frankl: creation, experience, and attitude toward suffering</a></li>
 						<li><a href="https://pubmed.ncbi.nlm.nih.gov/30614732/" target="_blank" rel="noopener">Coherence, purpose, and mattering as meaning components</a></li>
@@ -82,249 +97,491 @@
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"></script>
 	<script>
 		(function() {
-			var scores = {
-				care: 0,
-				build: 0,
-				guide: 0,
-				wonder: 0,
-				resilience: 0
-			};
+			"use strict";
 
+			// The ten scenes use all ten combinations of three traits drawn from five,
+			// so each trait is offered exactly six times. That balance is what lets the
+			// result be reported as a plain count instead of a normalised percentage.
 			var scenes = [
 				{
-					title: 'Scene 1: Lost at Dawn',
-					text: 'You wake in tangled vines after a storm and discover you can communicate with the animals. A scared monkey, an injured parrot, and a cautious tapir watch you from the trees.',
+					title: "Lost at Dawn",
+					text: "You wake tangled in vines with your ears still ringing. Somewhere in the noise the jungle resolves into words, and the words have names attached. Nia, a young howler monkey, is repeating not safe, not safe from a branch overhead. Below her the parrot Kesi drags one wing through the mud, and a tapir called Baru watches from the treeline, refusing to come any closer.",
 					choices: [
-						{ label: 'Calm the monkey first and make it feel safe near you.', add: { care: 2, guide: 1 } },
-						{ label: 'Build a quick shelter so everyone has a safe base.', add: { build: 2, guide: 1 } },
-						{ label: 'Gather the animals and set a simple plan for the day.', add: { guide: 2, care: 1 } }
+						{
+							trait: "care",
+							label: "Kneel by the parrot and steady its wing before you do anything else.",
+							outcome: "You bound the wing with wet leaves. The parrot has not left your shoulder since.",
+							ally: "Kesi, the parrot with the mended wing"
+						},
+						{
+							trait: "build",
+							label: "Drag the fallen palm fronds into a lean-to before the rain comes back.",
+							outcome: "The lean-to held through the second squall. All three of them slept under it.",
+							ally: "Baru, the tapir who trusted your roof"
+						},
+						{
+							trait: "guide",
+							label: "Get all three of them talking to each other and agree on one direction.",
+							outcome: "By dawn the three of them were arguing about the route, but they were arguing together.",
+							ally: "Nia, the howler who found her voice"
+						}
 					]
 				},
 				{
-					title: 'Scene 2: River of Trouble',
-					text: 'By noon, your new animal friends lead you to a roaring river. You can only continue if the whole group crosses together.',
+					title: "The Long Hunger",
+					text: "Two days pass without real food. Baru knows a grove of fruit trees half a morning east, but the way in runs directly beneath a wasp nest the size of your chest. Everyone is looking at the nest. Nobody is looking at you yet.",
 					choices: [
-						{ label: 'Design a sturdy vine bridge the group can trust.', add: { build: 2, resilience: 1 } },
-						{ label: 'Guide each animal across one by one with patience.', add: { care: 1, guide: 2 } },
-						{ label: 'Teach a clear crossing order so the group moves safely together.', add: { guide: 2, build: 1 } }
+						{
+							trait: "care",
+							label: "Give your share to the smallest ones first and go hungry another night.",
+							outcome: "You went to sleep empty. Nobody said anything, but the smallest ones stayed close after that."
+						},
+						{
+							trait: "build",
+							label: "Rig a smoking bundle of green leaves to drive the wasps out first.",
+							outcome: "The smoke worked. The grove has been safe to walk under ever since."
+						},
+						{
+							trait: "resilience",
+							label: "Take the stings yourself and carry the fruit out in one trip.",
+							outcome: "You carried the fruit out with both arms swelling. You did not mention it."
+						}
 					]
 				},
 				{
-					title: 'Scene 3: Night Under the Canopy',
-					text: 'At night, the animals curl up near your fire. The jungle is still dangerous, but you are no longer alone.',
+					title: "The River",
+					text: "The river has come up brown and fast with storm runoff, and it is loud enough that you have to shout. The far bank is the only way onward. Half the group cannot swim, and the light is going.",
 					choices: [
-						{ label: 'Promise yourself to stay kind and brave under pressure.', add: { resilience: 2, wonder: 1 } },
-						{ label: 'Practice survival skills to better protect your friends.', add: { build: 2, resilience: 1 } },
-						{ label: 'Watch the stars and reflect on what truly matters.', add: { wonder: 2, care: 1 } }
+						{
+							trait: "build",
+							label: "Weave a vine bridge and test it with your own weight first.",
+							outcome: "The bridge held. It is still there, and other animals use it now.",
+							ally: "Anhu, the old caiman who tested your knots"
+						},
+						{
+							trait: "guide",
+							label: "Set a crossing order, strongest swimmers flanking the weakest.",
+							outcome: "Everyone crossed. The order you set is the order they still travel in.",
+							ally: "Sela and Tam, the otter twins who swam the flanks"
+						},
+						{
+							trait: "wonder",
+							label: "Wait for the water to drop, and spend the night telling the frightened ones a story.",
+							outcome: "The water fell by morning. What they remember is the story, not the waiting.",
+							ally: "Moth, the tree frog who listens for stories"
+						}
 					]
 				},
 				{
-					title: 'Scene 4: The Animal Dispute',
-					text: 'At sunrise, parrots and boars fight over fruit trees. If this escalates, your fragile jungle alliance could break.',
+					title: "The First Night Watch",
+					text: "The fire is small and the dark past it is enormous. Something large moved through the undergrowth twice while you were gathering wood. Nobody has said out loud that someone will have to stay awake.",
 					choices: [
-						{ label: 'Hear both sides fully and guide a peace agreement.', add: { care: 2, guide: 1 } },
-						{ label: 'Create a fair feeding schedule and test it today.', add: { build: 2, guide: 1 } },
-						{ label: 'Hold a clear fairness line even if both sides resist.', add: { resilience: 2, wonder: 1 } }
+						{
+							trait: "care",
+							label: "Sit with the ones still shaking and let them talk until they fall asleep.",
+							outcome: "They talked for hours. Whatever was out there did not come back that night."
+						},
+						{
+							trait: "guide",
+							label: "Set a watch rotation so no one carries the whole night alone.",
+							outcome: "The rotation you set that night is still how the group sleeps."
+						},
+						{
+							trait: "resilience",
+							label: "Take the longest watch yourself and say nothing about it in the morning.",
+							outcome: "You watched until the sky greyed. In the morning you said you slept fine."
+						}
 					]
 				},
 				{
-					title: 'Scene 5: The Lost Cubs',
-					text: 'Another storm hits. The youngest animals are scattered, and your friends look to you for direction.',
+					title: "The Dry Season",
+					text: "The rains stop and do not start again. The waterhole the group depends on goes to cracked mud in eleven days. The older animals have seen this before and have gone very quiet, which is worse than panic.",
 					choices: [
-						{ label: 'Lead a careful search and reunite every cub with family.', add: { care: 2, guide: 1 } },
-						{ label: 'Build storm markers and safer routes for next time.', add: { build: 2, resilience: 1 } },
-						{ label: 'Train older animals to lead rescue teams themselves.', add: { guide: 2, care: 1 } }
+						{
+							trait: "build",
+							label: "Dig a seep pit where the mud still darkens, and line it with flat stones.",
+							outcome: "The seep pit filled overnight, slow and brown and enough. It has not run dry since."
+						},
+						{
+							trait: "wonder",
+							label: "Climb the ridge at dusk to see the whole valley, and remember why you are still walking.",
+							outcome: "From the ridge you could see green in the far cleft. You came down knowing where to go."
+						},
+						{
+							trait: "resilience",
+							label: "Ration what is left and walk through the heat rather than lose another day.",
+							outcome: "You walked through the worst of it. It cost you, and it saved four days."
+						}
 					]
 				},
 				{
-					title: 'Scene 6: Path Home',
-					text: 'You reach the jungle edge and finally see the path home. Your animal friends gather and ask what kind of helper you became.',
+					title: "The Grove Dispute",
+					text: "The fruit grove you cleared of wasps has become the problem. The parrots say they found it. The boars say they defended it. It has been three days of screaming and the first real shove happened this morning. Your fragile alliance is about to come apart over fruit.",
 					choices: [
-						{ label: 'I help by caring for others when they feel fear.', add: { care: 2, resilience: 1 } },
-						{ label: 'I help by solving hard problems that keep others safe.', add: { build: 1, resilience: 2 } },
-						{ label: 'I help by carrying hope and meaning through hardship.', add: { wonder: 2, resilience: 1 } }
+						{
+							trait: "care",
+							label: "Sit with each side separately until you understand what they are actually afraid of.",
+							outcome: "Both sides were afraid of the same winter. Once that was said out loud it got easier.",
+							ally: "Ras, the boar elder who was heard first"
+						},
+						{
+							trait: "guide",
+							label: "Bring both sides together and hold them to a single agreement.",
+							outcome: "The agreement was ugly and it held. They still refer to it as your rule.",
+							ally: "the parrot council, who ratified your rule"
+						},
+						{
+							trait: "wonder",
+							label: "Remind them out loud what the grove meant before any of this started.",
+							outcome: "Someone remembered planting it. The fight went out of the whole grove after that.",
+							ally: "Umi, the sloth who remembers the grove"
+						}
+					]
+				},
+				{
+					title: "The Second Storm",
+					text: "The sky goes green in the afternoon and the storm arrives faster than anything you have seen. When it passes, the youngest animals are scattered across two miles of flooded forest and the light is nearly gone.",
+					choices: [
+						{
+							trait: "guide",
+							label: "Split the group into search teams with clear ground assigned to each.",
+							outcome: "The teams found nine of them before full dark. The tenth walked in on her own."
+						},
+						{
+							trait: "wonder",
+							label: "Keep a fire burning high on the rock so anything lost has something to steer toward.",
+							outcome: "They came to the fire all night, in ones and twos, out of the dark."
+						},
+						{
+							trait: "resilience",
+							label: "Go back out alone into the worst of it, and keep going back.",
+							outcome: "You went back out six times. You do not talk about the sixth."
+						}
+					]
+				},
+				{
+					title: "The Sick Cub",
+					text: "Nia's youngest has a fever that has not broken in two days. She has stopped eating and started shivering in a way that has quieted the whole camp. Nia will not look at anyone.",
+					choices: [
+						{
+							trait: "care",
+							label: "Stay beside her through the night so she is not alone if it goes badly.",
+							outcome: "You stayed. The fever broke near dawn. Nia has never once mentioned it, and never forgotten."
+						},
+						{
+							trait: "build",
+							label: "Work out which plants brought fevers down before, and try them in order.",
+							outcome: "The third plant worked. You wrote the order into the bark of a tree so it would not be lost."
+						},
+						{
+							trait: "wonder",
+							label: "Gather everyone to sit with her, so whatever happens she is held by all of them.",
+							outcome: "The whole camp sat up with her. She recovered into a circle that had not left."
+						}
+					]
+				},
+				{
+					title: "The Jaguar",
+					text: "You have known for a week that something is pacing the treeline at the edge of camp. Last night you saw her fully for the first time: a jaguar, thin, watching the camp with an attention that is not quite hunting.",
+					choices: [
+						{
+							trait: "build",
+							label: "Fortify a thorn ring around the camp and clear proper sightlines.",
+							outcome: "The thorn ring went up in a day and a half. Nothing has come through it since.",
+							ally: "Tovo, the porcupine who taught you thorns"
+						},
+						{
+							trait: "guide",
+							label: "Teach the whole group one warning call and drill it until it is automatic.",
+							outcome: "The call still goes up the whole valley in under a minute. You taught them that.",
+							ally: "Sky, the harpy eagle who carries the warning"
+						},
+						{
+							trait: "resilience",
+							label: "Walk out to meet her yourself, and hear what she actually wants.",
+							outcome: "She was starving and had cubs. You walked back with her beside you, and nobody slept.",
+							ally: "Ixchel, the jaguar who chose not to hunt you"
+						}
+					]
+				},
+				{
+					title: "The Path Home",
+					text: "You push through a last wall of green and there it is: the ridge road, the smoke of a village, the way home. It is an afternoon's walk. Behind you the jungle has gone very quiet, and everyone who followed you here is waiting to hear what you say.",
+					choices: [
+						{
+							trait: "care",
+							label: "Stay one more season to see them settled, even with home in sight.",
+							outcome: "You stayed. Home waited, and everyone you brought this far got there first."
+						},
+						{
+							trait: "wonder",
+							label: "Tell them the story of what you all survived, so it outlasts you.",
+							outcome: "You told it properly, start to finish. They tell it now, and they get it right."
+						},
+						{
+							trait: "resilience",
+							label: "Say a hard, honest goodbye and walk the road while you still can.",
+							outcome: "You said it plainly and you walked. Nobody who was there has forgotten it."
+						}
 					]
 				}
 			];
 
-			// Rebalance: each trait is compared against its own possible max.
-			function computeTraitMax(sceneList) {
-				var maxByTrait = {};
-				Object.keys(scores).forEach(function(trait) { maxByTrait[trait] = 0; });
-
-				sceneList.forEach(function(scene) {
-					var sceneMax = {};
-					Object.keys(scores).forEach(function(trait) { sceneMax[trait] = 0; });
-
-					scene.choices.forEach(function(choice) {
-						Object.keys(choice.add).forEach(function(trait) {
-							if (choice.add[trait] > sceneMax[trait]) sceneMax[trait] = choice.add[trait];
-						});
-					});
-
-					Object.keys(sceneMax).forEach(function(trait) {
-						maxByTrait[trait] += sceneMax[trait];
-					});
-				});
-
-				return maxByTrait;
-			}
-
-			var traitMax = computeTraitMax(scenes);
-
 			var profiles = {
 				care: {
-					title: 'Relational Contributor',
-					story: 'The monkey calls you Heart Keeper, the one who protects bonds when fear rises.',
-					how: 'You create meaning through care, trust, and human connection.',
-					next: 'Contribution ideas: mentoring, counseling, teaching, community care programs.',
+					title: "Relational Contributor",
+					story: "The monkeys call you Heart Keeper, the one who protects bonds when fear rises.",
+					how: "You create meaning through care, trust, and human connection. You move toward the person who is struggling, and you tend to notice the quiet one before anyone else does.",
+					next: "Mentoring, counselling, teaching, community care programmes.",
 					examples: [
-						'Mentoring a new coworker through their first 90 days.',
-						'Volunteering weekly with a youth support or community center.',
-						'Starting a peer listening group for people under stress.'
-					]
+						"Mentoring a new coworker through their first ninety days.",
+						"Volunteering weekly with a youth or community support centre.",
+						"Starting a peer listening group for people under strain."
+					],
+					edge: "Your growth edge is letting others carry things without stepping in to absorb it for them."
 				},
 				build: {
-					title: 'Builder of Useful Things',
-					story: 'The tapir calls you Path Builder, the one who turns danger into safe passage.',
-					how: 'You create meaning by making systems, tools, or craft that improve lives.',
-					next: 'Contribution ideas: product building, automation, open-source tools, process design.',
+					title: "Builder of Useful Things",
+					story: "The tapirs call you Path Builder, the one who turns danger into safe passage.",
+					how: "You create meaning by making systems, tools, and craft that outlast the moment. You would rather fix the road than carry people over it one at a time.",
+					next: "Product building, automation, open source, process design.",
 					examples: [
-						'Building a simple app that saves people time on repetitive tasks.',
-						'Automating a manual workflow for a nonprofit or local team.',
-						'Contributing fixes or documentation to an open-source project.'
-					]
+						"Building a small tool that saves people time on repetitive work.",
+						"Automating a manual workflow for a nonprofit or local team.",
+						"Contributing fixes or documentation to an open-source project."
+					],
+					edge: "Your growth edge is remembering that some problems want presence, not a solution."
 				},
 				guide: {
-					title: 'Community Guide',
-					story: 'The parrots call you Circle Leader, the one who helps many voices move as one.',
-					how: 'You create meaning by organizing people and helping groups move together.',
-					next: 'Contribution ideas: team leadership, civic projects, nonprofit operations, facilitation.',
+					title: "Community Guide",
+					story: "The parrots call you Circle Leader, the one who helps many voices move as one.",
+					how: "You create meaning by organising people so a group can do what no one in it could do alone. You are the reason a crowd becomes a team.",
+					next: "Team leadership, civic projects, nonprofit operations, facilitation.",
 					examples: [
-						'Running a neighborhood cleanup or mutual-aid coordination effort.',
-						'Facilitating a cross-team planning session at work.',
-						'Leading volunteer scheduling for a community event.'
-					]
+						"Running a neighbourhood cleanup or mutual-aid effort.",
+						"Facilitating a cross-team planning session at work.",
+						"Coordinating volunteers for a community event."
+					],
+					edge: "Your growth edge is sitting in a room you are not running."
 				},
 				wonder: {
-					title: 'Meaning Maker',
-					story: 'The owl calls you Lantern Mind, the one who keeps wonder alive in dark moments.',
-					how: 'You create meaning through reflection, beauty, and reminding others what matters.',
-					next: 'Contribution ideas: writing, art, spiritual care, storytelling, retreat leadership.',
+					title: "Meaning Maker",
+					story: "The owls call you Lantern Mind, the one who keeps wonder alive in dark moments.",
+					how: "You create meaning through reflection, beauty, and reminding people what all of this was for. You keep the fire high so the lost have something to steer toward.",
+					next: "Writing, art, spiritual care, storytelling, retreat leadership.",
 					examples: [
-						'Writing essays or stories that help people make sense of hard seasons.',
-						'Creating art or music projects that bring communities together.',
-						'Hosting small reflection circles or guided journaling sessions.'
-					]
+						"Writing essays or stories that help people make sense of a hard season.",
+						"Making art or music that gives a community something to gather around.",
+						"Hosting small reflection circles or guided journaling."
+					],
+					edge: "Your growth edge is staying with the practical work after the meaning is clear."
 				},
 				resilience: {
-					title: 'Steady Courage Contributor',
-					story: 'The jaguar calls you Steady Flame, the one who stands firm in storms.',
-					how: 'You create meaning by facing hard reality and turning pain into service.',
-					next: 'Contribution ideas: crisis support, recovery work, coaching through transition, advocacy.',
+					title: "Steady Courage Contributor",
+					story: "The jaguars call you Steady Flame, the one who stands firm in storms.",
+					how: "You create meaning by facing hard reality directly and turning difficulty into service. You go back out the sixth time.",
+					next: "Crisis support, recovery work, coaching through transition, advocacy.",
 					examples: [
-						'Supporting crisis-response efforts in your local community.',
-						'Coaching people through layoffs, career changes, or major transitions.',
-						'Advocating for people who lack access to basic services.'
-					]
+						"Supporting crisis-response work in your community.",
+						"Coaching people through layoffs or major transitions.",
+						"Advocating for people who lack access to basic services."
+					],
+					edge: "Your growth edge is letting people see the cost instead of carrying it silently."
 				}
 			};
 
+			var TRAITS = ["care", "build", "guide", "wonder", "resilience"];
+			var TRAIT_LABEL = {
+				care: "Care",
+				build: "Build",
+				guide: "Guide",
+				wonder: "Wonder",
+				resilience: "Steady Courage"
+			};
+
+			// Every trait is offered in exactly this many scenes, by construction.
+			var OFFERS_PER_TRAIT = 6;
+
+			var scores = {};
+			var lastChosenAt = {};
+			var allies = [];
+			var journey = [];
 			var idx = 0;
-			var titleEl = document.getElementById('mq-scene-title');
-			var textEl = document.getElementById('mq-scene-text');
-			var choicesEl = document.getElementById('mq-choices');
-			var resultEl = document.getElementById('mq-result');
-			var progressEl = document.getElementById('mq-progress-text');
 
-			function addScores(add) {
-				Object.keys(add).forEach(function(key) {
-					scores[key] += add[key];
-				});
+			var stageEl = document.getElementById("mq-stage");
+			var titleEl = document.getElementById("mq-scene-title");
+			var textEl = document.getElementById("mq-scene-text");
+			var choicesEl = document.getElementById("mq-choices");
+			var resultEl = document.getElementById("mq-result");
+			var progressEl = document.getElementById("mq-progress-text");
+			var progressFill = document.getElementById("mq-progress-fill");
+			var echoEl = document.getElementById("mq-echo");
+
+			function reset() {
+				scores = {};
+				lastChosenAt = {};
+				TRAITS.forEach(function(t) { scores[t] = 0; lastChosenAt[t] = -1; });
+				allies = [];
+				journey = [];
+				idx = 0;
 			}
 
-			function sortedTraits() {
-				var normalized = normalizedScores();
-				return Object.keys(scores).sort(function(a, b) {
-					if (normalized[b] !== normalized[a]) return normalized[b] - normalized[a];
+			function escapeHTML(value) {
+				return String(value)
+					.replace(/&/g, "&amp;")
+					.replace(/</g, "&lt;")
+					.replace(/>/g, "&gt;")
+					.replace(/"/g, "&quot;");
+			}
+
+			function listSentence(items) {
+				if (items.length === 1) return items[0];
+				if (items.length === 2) return items[0] + " and " + items[1];
+				return items.slice(0, -1).join(", ") + ", and " + items[items.length - 1];
+			}
+
+			// Ties are common and legitimate with ten choices across five traits, so
+			// they are broken by which trait you reached for most recently rather than
+			// by array order, which would quietly favour whichever trait is listed first.
+			function rankedTraits() {
+				return TRAITS.slice().sort(function(a, b) {
 					if (scores[b] !== scores[a]) return scores[b] - scores[a];
-					return a.localeCompare(b);
+					return lastChosenAt[b] - lastChosenAt[a];
 				});
-			}
-
-			function normalizedScores() {
-				var normalized = {};
-				Object.keys(scores).forEach(function(trait) {
-					var max = traitMax[trait] || 1;
-					normalized[trait] = scores[trait] / max;
-				});
-				return normalized;
-			}
-
-			function examplesHtml(list) {
-				return '<ul>' + list.map(function(item) {
-					return '<li>' + item + '</li>';
-				}).join('') + '</ul>';
 			}
 
 			function renderScene() {
 				var scene = scenes[idx];
-				progressEl.textContent = 'Scene ' + (idx + 1) + ' of ' + scenes.length;
+
+				progressEl.textContent = "Scene " + (idx + 1) + " of " + scenes.length;
+				progressFill.style.width = ((idx / scenes.length) * 100) + "%";
+
+				if (idx === 0) {
+					echoEl.hidden = true;
+					echoEl.textContent = "";
+				} else {
+					echoEl.hidden = false;
+					echoEl.textContent = journey[journey.length - 1].outcome;
+				}
+
 				titleEl.textContent = scene.title;
 				textEl.textContent = scene.text;
-				choicesEl.innerHTML = '';
+				choicesEl.innerHTML = "";
 
 				scene.choices.forEach(function(choice) {
-					var btn = document.createElement('button');
-					btn.className = 'mq-choice';
-					btn.type = 'button';
+					var btn = document.createElement("button");
+					btn.className = "mq-choice";
+					btn.type = "button";
 					btn.textContent = choice.label;
-					btn.addEventListener('click', function() {
-						addScores(choice.add);
+					btn.addEventListener("click", function() {
+						scores[choice.trait] += 1;
+						lastChosenAt[choice.trait] = idx;
+						journey.push({
+							scene: scene.title,
+							label: choice.label,
+							outcome: choice.outcome,
+							trait: choice.trait
+						});
+						if (choice.ally) allies.push(choice.ally);
 						idx++;
 						if (idx >= scenes.length) {
 							renderResult();
 						} else {
 							renderScene();
+							titleEl.focus();
 						}
 					});
 					choicesEl.appendChild(btn);
 				});
 			}
 
-			function renderResult() {
-				var top = sortedTraits();
-				var normalized = normalizedScores();
-				var primary = profiles[top[0]];
-				var secondary = profiles[top[1]];
-				var closeResult = Math.abs(normalized[top[0]] - normalized[top[1]]) <= 0.08;
-				choicesEl.innerHTML = '';
-				progressEl.textContent = 'Complete';
-				titleEl.textContent = closeResult ? 'The Jungle\'s Answer: Two Strong Paths' : 'The Jungle\'s Answer';
-				textEl.textContent = 'You may have found the path home, but you also found the way you naturally serve others.';
-				resultEl.hidden = false;
-				resultEl.innerHTML =
-					'<h4>' + primary.title + ' (' + Math.round(normalized[top[0]] * 100) + '% fit)</h4>' +
-					'<p><strong>Story reading:</strong> ' + primary.story + '</p>' +
-					'<p>' + primary.how + '</p>' +
-					'<p><strong>Try this next:</strong> ' + primary.next + '</p>' +
-					'<p><strong>Real-life examples:</strong></p>' +
-					examplesHtml(primary.examples) +
-					'<hr>' +
-					'<p><strong>' + (closeResult ? 'Co-primary path' : 'Secondary path') + ':</strong> ' + secondary.title + ' (' + Math.round(normalized[top[1]] * 100) + '% fit)</p>' +
-					'<p><strong>Story reading:</strong> ' + secondary.story + '</p>' +
-					'<p><strong>Real-life examples:</strong></p>' +
-					examplesHtml(secondary.examples) +
-					'<button class="mq-restart" type="button">Play again</button>';
-
-				resultEl.querySelector('.mq-restart').addEventListener('click', function() {
-					Object.keys(scores).forEach(function(k) { scores[k] = 0; });
-					idx = 0;
-					resultEl.hidden = true;
-					renderScene();
-				});
+			function barsHtml() {
+				var ranked = rankedTraits();
+				return '<div class="mq-bars">' + ranked.map(function(trait) {
+					var n = scores[trait];
+					var pct = (n / OFFERS_PER_TRAIT) * 100;
+					return '' +
+						'<div class="mq-bar-row">' +
+							'<span class="mq-bar-label">' + TRAIT_LABEL[trait] + '</span>' +
+							'<span class="mq-bar-track">' +
+								'<span class="mq-bar-fill" style="width:' + pct + '%"></span>' +
+							'</span>' +
+							'<span class="mq-bar-count">' + n + ' of ' + OFFERS_PER_TRAIT + '</span>' +
+						'</div>';
+				}).join("") + '</div>';
 			}
 
+			function journeyHtml() {
+				return '<ol class="mq-journey">' + journey.map(function(step) {
+					return '<li><strong>' + escapeHTML(step.scene) + '</strong> &mdash; ' +
+						escapeHTML(step.label) + '</li>';
+				}).join("") + '</ol>';
+			}
+
+			function examplesHtml(list) {
+				return "<ul>" + list.map(function(item) {
+					return "<li>" + escapeHTML(item) + "</li>";
+				}).join("") + "</ul>";
+			}
+
+			function renderResult() {
+				var ranked = rankedTraits();
+				var primary = profiles[ranked[0]];
+				var secondary = profiles[ranked[1]];
+				var lowest = profiles[ranked[ranked.length - 1]];
+				var tied = scores[ranked[0]] === scores[ranked[1]];
+
+				choicesEl.innerHTML = "";
+				echoEl.hidden = false;
+				echoEl.textContent = journey[journey.length - 1].outcome;
+
+				progressEl.textContent = "Journey complete";
+				progressFill.style.width = "100%";
+
+				titleEl.textContent = tied ? "The Jungle's Answer: Two Equal Paths" : "The Jungle's Answer";
+				textEl.textContent = "You found the path home. You also found out what you do when it is not obvious what to do.";
+
+				var alliesBlock = allies.length
+					? '<h4>Who walked out with you</h4><p>' + escapeHTML(listSentence(allies)) + '.</p>'
+					: '<h4>Who walked out with you</h4><p>You made the whole crossing alone. That is its own answer.</p>';
+
+				resultEl.hidden = false;
+				resultEl.innerHTML =
+					barsHtml() +
+					'<p class="mq-scoring-note">Each way of helping was offered exactly ' + OFFERS_PER_TRAIT +
+						' times across the ten scenes, so these counts compare directly.</p>' +
+					'<h4>' + escapeHTML(primary.title) + '</h4>' +
+					'<p><strong>The jungle&rsquo;s name for you:</strong> ' + escapeHTML(primary.story) + '</p>' +
+					'<p>' + escapeHTML(primary.how) + '</p>' +
+					'<p><strong>Where this goes:</strong> ' + escapeHTML(primary.next) + '</p>' +
+					examplesHtml(primary.examples) +
+					'<hr>' +
+					'<h4>' + (tied ? "Equally strong" : "Close behind") + ': ' + escapeHTML(secondary.title) + '</h4>' +
+					'<p>' + escapeHTML(secondary.story) + '</p>' +
+					'<p>' + escapeHTML(secondary.how) + '</p>' +
+					'<hr>' +
+					'<h4>Your growth edge</h4>' +
+					'<p>You reached for <strong>' + TRAIT_LABEL[ranked[ranked.length - 1]].toLowerCase() +
+						'</strong> least often. ' + escapeHTML(lowest.edge) + '</p>' +
+					'<hr>' +
+					alliesBlock +
+					'<details class="mq-recap"><summary>The path you actually took</summary>' +
+						journeyHtml() +
+					'</details>' +
+					'<button class="mq-restart" type="button">Walk it again</button>';
+
+				resultEl.querySelector(".mq-restart").addEventListener("click", function() {
+					reset();
+					resultEl.hidden = true;
+					resultEl.innerHTML = "";
+					renderScene();
+					titleEl.focus();
+				});
+
+				titleEl.focus();
+			}
+
+			reset();
 			renderScene();
 		})();
 	</script>
