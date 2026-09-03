@@ -4,7 +4,7 @@
 	<meta charset="UTF-8">
 	<title>QA Engineer Cheatsheet — Sam Freund</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<meta name="description" content="An interactive QA engineering toolkit — Playwright best practices, test design generators, tooling comparisons, and a full quality engineering reference.">
+	<meta name="description" content="An interactive QA engineering toolkit — SQL, Playwright, Selenium, test design generators, and a full quality engineering reference.">
 
 	<!-- Bootstrap CDN -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" crossorigin="anonymous" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH">
@@ -52,9 +52,9 @@
 		<div class="qc-container">
 			<div class="qc-header">
 				<h1>QA ENGINEER CHEATSHEET</h1>
-				<p>An interactive toolkit for quality engineers — test design techniques, Playwright best practices, the tooling landscape, and seven generators that do the tedious parts for you.</p>
+				<p>An interactive toolkit for quality engineers — test design, SQL, Playwright and Selenium basics, the tooling landscape, and seven generators that do the tedious parts for you.</p>
 				<div class="qc-header-stats">
-					<span class="qc-stat"><i class="fas fa-layer-group"></i> <span id="statSections">17</span> Sections</span>
+					<span class="qc-stat"><i class="fas fa-layer-group"></i> <span id="statSections">19</span> Sections</span>
 					<span class="qc-stat"><i class="fas fa-wand-magic-sparkles"></i> 7 Generators</span>
 					<span class="qc-stat"><i class="fas fa-code"></i> Copy-ready snippets</span>
 					<span class="qc-stat"><i class="fas fa-cloud-arrow-down"></i> No account, no tracking</span>
@@ -410,6 +410,44 @@
 			icon: 'fa-masks-theater',
 			blurb: 'The deep section. Playwright removes most of the classic sources of flake for free — but only if you write it the way it expects. Almost every flaky Playwright suite is flaky for one of the reasons below.',
 			cards: [
+			{
+				title: 'Start here: install, write, run',
+				icon: 'fa-play',
+				parts: [
+					{ p: 'Playwright Test bundles the runner, assertions, browser isolation, and debugging tools. The initializer can add it to a new or existing Node project and offers TypeScript by default.' },
+					{ code: L(
+						"# Scaffold Playwright Test and install its browsers",
+						"npm init playwright@latest",
+						"",
+						"# Run every test headlessly",
+						"npx playwright test",
+						"",
+						"# Learn by watching one test",
+						"npx playwright test tests/login.spec.ts --headed",
+						"npx playwright test --ui"
+					), label: 'terminal' },
+					{ code: L(
+						"import { test, expect } from '@playwright/test';",
+						"",
+						"test('a user can sign in', async ({ page }) => {",
+						"  await page.goto('/login');",
+						"  await page.getByLabel('Email').fill('qa@example.com');",
+						"  await page.getByLabel('Password').fill('correct-horse-battery-staple');",
+						"  await page.getByRole('button', { name: 'Sign in' }).click();",
+						"",
+						"  await expect(page.getByRole('heading', { name: 'Dashboard' }))",
+						"    .toBeVisible();",
+						"});"
+					), label: 'tests/login.spec.ts' },
+					{ kv: [
+						['<code>test(...)</code>', 'Names one independent behavior and receives isolated fixtures such as <code>page</code>.'],
+						['<code>page.goto()</code>', 'Navigates the browser. A relative URL uses the <code>baseURL</code> in the Playwright config.'],
+						['Locator + action', 'Find what a user would interact with, then <code>fill</code>, <code>click</code>, <code>check</code>, or <code>selectOption</code>.'],
+						['<code>await expect(...)</code>', 'Verifies the visible outcome and automatically retries while the page updates.']
+					] },
+					{ callout: { kind: 'tip', text: 'This first test already contains the core loop: <strong>arrange</strong> with navigation, <strong>act</strong> like a user, then <strong>assert</strong> on an observable result. The cards below show how to keep that loop reliable as the suite grows.' } }
+				]
+			},
 			{
 				title: 'The locator priority ladder',
 				icon: 'fa-list-ol',
@@ -1092,7 +1130,164 @@
 			]
 		},
 
-		/* ---------- 5. TOOLING ---------- */
+		/* ---------- 5. SELENIUM ---------- */
+		{
+			id: 'selenium',
+			title: 'Selenium Basics',
+			icon: 'fa-globe',
+			blurb: 'Selenium WebDriver controls real browsers through a language-neutral standard. These Python examples cover the dependable core: sessions, locators, actions, assertions, waits, cleanup, and cross-browser runs.',
+			cards: [
+			{
+				title: 'Start here: install, write, run',
+				icon: 'fa-play',
+				parts: [
+					{ p: 'Selenium is the browser-control library; <code>pytest</code> supplies test discovery, assertions, fixtures, and reporting. Current Selenium bindings include Selenium Manager, which resolves and caches a compatible browser driver when one is not already configured.' },
+					{ code: L(
+						"python -m venv .venv",
+						"",
+						"# Windows PowerShell",
+						".venv\\Scripts\\Activate.ps1",
+						"",
+						"# macOS / Linux",
+						"source .venv/bin/activate",
+						"",
+						"python -m pip install -U selenium pytest",
+						"pytest -v"
+					), label: 'terminal' },
+					{ code: L(
+						"from selenium import webdriver",
+						"from selenium.webdriver.common.by import By",
+						"",
+						"def test_web_form():",
+						"    driver = webdriver.Chrome()",
+						"    try:",
+						"        driver.get('https://www.selenium.dev/selenium/web/web-form.html')",
+						"        driver.find_element(By.NAME, 'my-text').send_keys('Selenium')",
+						"        driver.find_element(By.CSS_SELECTOR, 'button').click()",
+						"",
+						"        message = driver.find_element(By.ID, 'message')",
+						"        assert message.text == 'Received!'",
+						"    finally:",
+						"        driver.quit()"
+					), label: 'test_web_form.py' },
+					{ callout: { kind: 'key', text: '<code>driver.quit()</code> ends the whole browser session and releases its processes. Put it in <code>finally</code> or a fixture teardown so a failed assertion cannot strand browsers on a developer machine or CI runner.' } }
+				]
+			},
+			{
+				title: 'The WebDriver loop',
+				icon: 'fa-arrows-rotate',
+				parts: [
+					{ kv: [
+						['1. Start a session', '<code>webdriver.Chrome()</code>, <code>Firefox()</code>, <code>Edge()</code>, or a remote driver launches or connects to a browser.'],
+						['2. Navigate', '<code>driver.get(url)</code> opens a page; <code>back()</code>, <code>forward()</code>, and <code>refresh()</code> control browser history.'],
+						['3. Find', '<code>find_element</code> returns the first match or raises an error; <code>find_elements</code> returns every match or an empty list.'],
+						['4. Interact', 'Use element methods such as <code>click()</code>, <code>send_keys()</code>, <code>clear()</code>, and <code>submit()</code>.'],
+						['5. Inspect and assert', 'Read <code>text</code>, <code>get_attribute()</code>, <code>is_displayed()</code>, the page title, or URL, then assert the expected user-visible result.'],
+						['6. End the session', '<code>quit()</code> closes every tab and releases the driver. <code>close()</code> closes only the current tab or window.']
+					] },
+					{ code: L(
+						"driver.get('https://example.test/login')",
+						"driver.find_element(By.ID, 'email').send_keys('qa@example.com')",
+						"driver.find_element(By.ID, 'password').send_keys('test-password')",
+						"driver.find_element(By.CSS_SELECTOR, 'button[type=submit]').click()",
+						"",
+						"assert driver.current_url.endswith('/dashboard')",
+						"assert 'Welcome' in driver.find_element(By.TAG_NAME, 'h1').text"
+					), label: 'find, act, assert' }
+				]
+			},
+			{
+				title: 'Choose stable locators',
+				icon: 'fa-crosshairs',
+				parts: [
+					{ table: {
+						head: ['Strategy', 'Example', 'Guidance'],
+						rows: [
+							['<code>By.ID</code>', '<code>By.ID, "checkout"</code>', 'Best when the ID is unique and intentionally stable.'],
+							['<code>By.NAME</code>', '<code>By.NAME, "email"</code>', 'Simple and readable for named form controls.'],
+							['<code>By.CSS_SELECTOR</code>', '<code>By.CSS_SELECTOR, "[data-testid=save]"</code>', 'Flexible and usually the best fallback when no stable ID exists.'],
+							['<code>By.LINK_TEXT</code>', '<code>By.LINK_TEXT, "Account"</code>', 'Readable for links, but product copy changes can break it.'],
+							['<code>By.XPATH</code>', '<code>By.XPATH, "//button[@type=\'submit\']"</code>', 'Powerful, but verbose and easy to couple to page structure. Use only when simpler choices cannot express the target.']
+						]
+					} },
+					{ code: L(
+						"# Scope a lookup to a meaningful region",
+						"cart = driver.find_element(By.ID, 'cart')",
+						"rows = cart.find_elements(By.CSS_SELECTOR, '[data-testid=cart-row]')",
+						"assert len(rows) == 2",
+						"",
+						"# Use a dedicated test attribute when product markup has no stable hook",
+						"save = driver.find_element(By.CSS_SELECTOR, '[data-testid=save-order]')"
+					), label: 'locators' },
+					{ callout: { kind: 'warn', text: 'Avoid generated classes and position-based paths such as <code>div:nth-child(3) &gt; button</code>. They describe today’s markup rather than the element’s purpose, so harmless layout changes break the test.' } }
+				]
+			},
+			{
+				title: 'Wait for conditions, never sleep',
+				icon: 'fa-hourglass-half',
+				parts: [
+					{ p: 'Browser automation and the application run independently. An explicit wait repeatedly checks one meaningful condition until it succeeds or reaches its timeout.' },
+					{ code: L(
+						"from selenium.webdriver.support.ui import WebDriverWait",
+						"from selenium.webdriver.support import expected_conditions as EC",
+						"",
+						"wait = WebDriverWait(driver, 10)",
+						"",
+						"save = wait.until(EC.element_to_be_clickable((By.ID, 'save')))",
+						"save.click()",
+						"",
+						"toast = wait.until(",
+						"    EC.visibility_of_element_located((By.CSS_SELECTOR, '[role=alert]'))",
+						")",
+						"assert toast.text == 'Saved'",
+						"",
+						"wait.until(EC.url_contains('/orders/'))"
+					), label: 'explicit waits' },
+					{ table: {
+						head: ['Condition', 'Use it when'],
+						rows: [
+							['<code>presence_of_element_located</code>', 'The element only needs to exist in the DOM.'],
+							['<code>visibility_of_element_located</code>', 'A user must be able to see it.'],
+							['<code>element_to_be_clickable</code>', 'It must be visible and enabled before interaction.'],
+							['<code>invisibility_of_element_located</code>', 'A spinner, modal, or overlay must disappear.'],
+							['<code>text_to_be_present_in_element</code>', 'Existing content changes asynchronously.'],
+							['<code>url_contains</code>', 'Navigation completes without a reliable page element.']
+						]
+					} },
+					{ callout: { kind: 'warn', text: 'Do not use <code>time.sleep()</code> for synchronization, and do not mix implicit and explicit waits. Sleeps waste time and still flake; mixed wait types can produce unpredictable timeout lengths.' } }
+				]
+			},
+			{
+				title: 'Use a fixture and switch browsers',
+				icon: 'fa-code-branch',
+				parts: [
+					{ code: L(
+						"import pytest",
+						"from selenium import webdriver",
+						"",
+						"@pytest.fixture(params=['chrome', 'firefox'])",
+						"def driver(request):",
+						"    factories = {",
+						"        'chrome': webdriver.Chrome,",
+						"        'firefox': webdriver.Firefox,",
+						"    }",
+						"    browser = factories[request.param]()",
+						"    browser.set_window_size(1440, 900)",
+						"    yield browser",
+						"    browser.quit()",
+						"",
+						"def test_homepage_title(driver):",
+						"    driver.get('https://example.test')",
+						"    assert driver.title == 'Example'"
+					), label: 'conftest.py + test_homepage.py' },
+					{ p: 'The fixture makes cleanup automatic and the parameter runs the same behavior in Chrome and Firefox. For large remote suites, pass browser capabilities to <code>webdriver.Remote</code> and let Selenium Grid or a device cloud provide the sessions.' },
+					{ callout: { kind: 'tip', text: 'Keep tests independent: each test should create or receive its own browser state, arrange the data it needs, and leave no data another test depends on. Independence makes parallel and cross-browser execution predictable.' } }
+				]
+			}
+			]
+		},
+
+		/* ---------- 6. TOOLING ---------- */
 		{
 			id: 'tooling',
 			title: 'Automation Tooling Landscape',
@@ -1157,7 +1352,7 @@
 			]
 		},
 
-		/* ---------- 6. API TESTING ---------- */
+		/* ---------- 7. API TESTING ---------- */
 		{
 			id: 'api',
 			title: 'API Testing',
@@ -1300,7 +1495,152 @@
 			]
 		},
 
-		/* ---------- 7. PERFORMANCE ---------- */
+		/* ---------- 8. SQL BASICS ---------- */
+		{
+			id: 'sql',
+			title: 'SQL Basics for QA',
+			icon: 'fa-database',
+			blurb: 'SQL lets a QA engineer verify what the application actually stored, build precise test data, and investigate defects beneath the UI. These examples use broadly portable ANSI SQL.',
+			cards: [
+			{
+				title: 'Read and filter data',
+				icon: 'fa-magnifying-glass',
+				parts: [
+					{ kv: [
+						['<code>SELECT</code>', 'Choose the columns to return. Use <code>*</code> for every column while exploring, but name columns in saved queries so results stay predictable.'],
+						['<code>FROM</code>', 'Choose the table the data comes from.'],
+						['<code>WHERE</code>', 'Keep only rows that match a condition. Combine conditions with <code>AND</code>, <code>OR</code>, and parentheses.'],
+						['<code>ORDER BY</code>', 'Sort the result with <code>ASC</code> (ascending, the default) or <code>DESC</code> (descending).'],
+						['<code>LIMIT</code>', 'Return only a fixed number of rows. SQL Server uses <code>TOP</code>; standard SQL also supports <code>FETCH FIRST</code>.'],
+						['<code>AS</code>', 'Give a column or table a short alias, such as <code>customers AS c</code>.']
+					] },
+					{ code: L(
+						"SELECT id, email, status, created_at",
+						"FROM customers",
+						"WHERE status = 'active'",
+						"  AND created_at >= '2026-01-01'",
+						"ORDER BY created_at DESC",
+						"LIMIT 20;"
+					), label: 'select' },
+					{ callout: { kind: 'tip', text: 'SQL keywords are case-insensitive, but writing them in uppercase makes a query easier to scan. A semicolon ends the statement.' } }
+				]
+			},
+			{
+				title: 'Conditions, NULL, and matching',
+				icon: 'fa-filter',
+				parts: [
+					{ table: {
+						head: ['Syntax', 'Meaning', 'Example'],
+						rows: [
+							['<code>=</code>, <code>&lt;&gt;</code>', 'Equal / not equal', '<code>status &lt;&gt; \'cancelled\'</code>'],
+							['<code>&gt;</code>, <code>&gt;=</code>, <code>&lt;</code>, <code>&lt;=</code>', 'Numeric, date, or text comparison', '<code>total &gt;= 100</code>'],
+							['<code>IN (...)</code>', 'Match any value in a list', '<code>status IN (\'paid\', \'shipped\')</code>'],
+							['<code>BETWEEN</code>', 'Inclusive lower and upper bounds', '<code>total BETWEEN 10 AND 50</code>'],
+							['<code>LIKE</code>', 'Pattern match: <code>%</code> is any length, <code>_</code> is one character', '<code>email LIKE \'%@example.com\'</code>'],
+							['<code>IS NULL</code>', 'Find a missing or unknown value', '<code>shipped_at IS NULL</code>']
+						]
+					} },
+					{ callout: { kind: 'warn', text: '<code>NULL</code> means unknown or absent, so <code>= NULL</code> and <code>&lt;&gt; NULL</code> do not work. Always use <code>IS NULL</code> or <code>IS NOT NULL</code>.' } }
+				]
+			},
+			{
+				title: 'JOINs — combine related tables',
+				icon: 'fa-link',
+				parts: [
+					{ p: 'A <code>JOIN</code> combines related rows from two tables. Most joins state the relationship explicitly in an <code>ON</code> clause; <code>NATURAL JOIN</code> is the exception. In these examples, <code>customers.id</code> matches <code>orders.customer_id</code>. Think of the table named before the join as the <strong>left</strong> table and the table named after it as the <strong>right</strong> table.' },
+					{ table: {
+						head: ['Join', 'Rows returned', 'Use it to test'],
+						rows: [
+							['<code>INNER JOIN</code>', 'Only rows with a match in both tables.', 'Records whose relationship exists on both sides.'],
+							['<code>NATURAL JOIN</code>', 'An inner join that automatically matches every column with the same name in both tables. It has no <code>ON</code> clause.', 'Quick exploration when the shared column names are intentional and fully understood.'],
+							['<code>LEFT JOIN</code>', 'Every row from the left table, plus matching right rows. Missing matches become <code>NULL</code>.', 'Customers with no orders, users with no profile, or other missing child records.'],
+							['<code>RIGHT JOIN</code>', 'Every row from the right table, plus matching left rows. Missing matches become <code>NULL</code>.', 'Orphaned right-side records. Often rewritten as a <code>LEFT JOIN</code> with the table order reversed.'],
+							['<code>FULL OUTER JOIN</code>', 'Every row from both tables. Matched rows combine; unmatched columns on either side become <code>NULL</code>.', 'Any mismatch or orphan on either side of a relationship.']
+						]
+					} },
+					{ code: L(
+						"-- INNER: only customers that have an order",
+						"SELECT c.email, o.id AS order_id",
+						"FROM customers AS c",
+						"INNER JOIN orders AS o ON o.customer_id = c.id;",
+						"",
+						"-- LEFT: all customers, including those without orders",
+						"SELECT c.email, o.id AS order_id",
+						"FROM customers AS c",
+						"LEFT JOIN orders AS o ON o.customer_id = c.id;",
+						"",
+						"-- RIGHT: all orders, even if their customer is missing",
+						"SELECT c.email, o.id AS order_id",
+						"FROM customers AS c",
+						"RIGHT JOIN orders AS o ON o.customer_id = c.id;",
+						"",
+						"-- FULL OUTER: every customer and every order",
+						"SELECT c.email, o.id AS order_id",
+						"FROM customers AS c",
+						"FULL OUTER JOIN orders AS o ON o.customer_id = c.id;",
+						"",
+						"-- NATURAL: automatically match every same-named column",
+						"-- Assumes customer_id is the only shared column name",
+						"SELECT customer_id, email, plan",
+						"FROM customer_accounts",
+						"NATURAL JOIN customer_plans;"
+					), label: 'joins' },
+					{ code: L(
+						"-- A useful QA query: customers with no orders",
+						"SELECT c.id, c.email",
+						"FROM customers AS c",
+						"LEFT JOIN orders AS o ON o.customer_id = c.id",
+						"WHERE o.id IS NULL;"
+					), label: 'find missing relationships' },
+					{ callout: { kind: 'warn', text: '<code>NATURAL JOIN</code> is concise but fragile: adding an unrelated same-named column to either table silently changes the query. Inspect both schemas first, and prefer an explicit <code>JOIN ... ON ...</code> in saved tests and production queries.' } },
+					{ callout: { kind: 'tip', text: '<code>FULL OUTER JOIN</code> is also common. MySQL and SQLite do not support it directly; combine a left-side and right-side result with <code>UNION</code>, or use two <code>LEFT JOIN</code> queries with the table order reversed.' } }
+				]
+			},
+			{
+				title: 'Count, group, and find suspicious data',
+				icon: 'fa-chart-column',
+				parts: [
+					{ kv: [
+						['<code>COUNT</code>, <code>SUM</code>, <code>AVG</code>, <code>MIN</code>, <code>MAX</code>', 'Aggregate many rows into a summary value.'],
+						['<code>GROUP BY</code>', 'Make one summary row for each distinct value or combination of values.'],
+						['<code>HAVING</code>', 'Filter groups after aggregation. <code>WHERE</code> filters individual rows before aggregation.'],
+						['<code>DISTINCT</code>', 'Remove duplicate result rows; useful for exploration, but do not use it to hide an incorrect join.']
+					] },
+					{ code: L(
+						"-- Find duplicate emails that may violate a requirement",
+						"SELECT email, COUNT(*) AS occurrences",
+						"FROM customers",
+						"GROUP BY email",
+						"HAVING COUNT(*) > 1",
+						"ORDER BY occurrences DESC;"
+					), label: 'group and having' }
+				]
+			},
+			{
+				title: 'Insert, update, and delete data',
+				icon: 'fa-pen-to-square',
+				parts: [
+					{ code: L(
+						"-- INSERT a row",
+						"INSERT INTO customers (email, status)",
+						"VALUES ('qa+sql@example.com', 'active');",
+						"",
+						"-- CHANGE matching rows",
+						"UPDATE customers",
+						"SET status = 'inactive'",
+						"WHERE email = 'qa+sql@example.com';",
+						"",
+						"-- REMOVE matching rows",
+						"DELETE FROM customers",
+						"WHERE email = 'qa+sql@example.com';"
+					), label: 'insert update delete' },
+					{ callout: { kind: 'warn', text: 'Before an <code>UPDATE</code> or <code>DELETE</code>, run the same <code>WHERE</code> clause as a <code>SELECT</code> and confirm the exact rows. Without <code>WHERE</code>, every row is changed or deleted. Use a disposable test database and a transaction when possible.' } }
+				]
+			}
+			]
+		},
+
+		/* ---------- 9. PERFORMANCE ---------- */
 		{
 			id: 'performance',
 			title: 'Performance Testing',
@@ -1418,7 +1758,7 @@
 			]
 		},
 
-		/* ---------- 8. ACCESSIBILITY ---------- */
+		/* ---------- 10. ACCESSIBILITY ---------- */
 		{
 			id: 'accessibility',
 			title: 'Accessibility Testing',
@@ -1503,7 +1843,7 @@
 			]
 		},
 
-		/* ---------- 9. SECURITY ---------- */
+		/* ---------- 11. SECURITY ---------- */
 		{
 			id: 'security',
 			title: 'Security Testing for QA',
@@ -1598,7 +1938,7 @@
 			]
 		},
 
-		/* ---------- 10. MOBILE & CROSS-BROWSER ---------- */
+		/* ---------- 12. MOBILE & CROSS-BROWSER ---------- */
 		{
 			id: 'mobile',
 			title: 'Mobile & Cross-Browser',
@@ -1687,7 +2027,7 @@
 			]
 		},
 
-		/* ---------- 11. VISUAL ---------- */
+		/* ---------- 13. VISUAL ---------- */
 		{
 			id: 'visual',
 			title: 'Visual & Snapshot Testing',
@@ -1757,7 +2097,7 @@
 			]
 		},
 
-		/* ---------- 12. CI/CD ---------- */
+		/* ---------- 14. CI/CD ---------- */
 		{
 			id: 'cicd',
 			title: 'CI/CD & Test Infrastructure',
@@ -1870,7 +2210,7 @@
 			]
 		},
 
-		/* ---------- 13. FLAKY TESTS ---------- */
+		/* ---------- 15. FLAKY TESTS ---------- */
 		{
 			id: 'flaky',
 			title: 'Flaky Tests & Debugging',
@@ -1941,7 +2281,7 @@
 			]
 		},
 
-		/* ---------- 14. BUG REPORTING ---------- */
+		/* ---------- 16. BUG REPORTING ---------- */
 		{
 			id: 'bugs',
 			title: 'Bug Reporting & Communication',
@@ -2030,7 +2370,7 @@
 			]
 		},
 
-		/* ---------- 15. METRICS ---------- */
+		/* ---------- 17. METRICS ---------- */
 		{
 			id: 'metrics',
 			title: 'Metrics That Matter',
@@ -2102,7 +2442,7 @@
 			]
 		},
 
-		/* ---------- 16. INTERVIEW & CAREER ---------- */
+		/* ---------- 18. INTERVIEW & CAREER ---------- */
 		{
 			id: 'career',
 			title: 'Interview Prep & Career',
@@ -2175,7 +2515,7 @@
 			]
 		},
 
-		/* ---------- 17. GLOSSARY ---------- */
+		/* ---------- 19. GLOSSARY ---------- */
 		{
 			id: 'glossary',
 			title: 'Glossary',
